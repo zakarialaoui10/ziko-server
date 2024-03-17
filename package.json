@@ -1,15 +1,19 @@
 {
   "name": "ziko-lottie",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Lottie player element for zikojs",
   "type": "module",
   "source": "src/index.js",
-  "main": "dist/ziko.cjs",
-  "module": "dist/ziko.mjs",
+  "main": "dist/ziko-lottie.cjs",
+  "module": "dist/ziko-lottie.mjs",
   "files": [
     "src",
     "dist",
     "LICENCE"
+  ],
+  "keywords": [
+    "ziko",
+    "Lottie"
   ],
   "scripts": {
     "dev": "rollup -c rollup.config.js -w",

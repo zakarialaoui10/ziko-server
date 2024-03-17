@@ -28,7 +28,6 @@ Lottie player element for zikojs
 </head>
 <body>
     <script src="https://cdn.jsdelivr.net/npm/ziko@latest/dist/ziko.js"></script>
-    <script>
     <script src="https://cdn.jsdelivr.net/npm/ziko-lottie@latest/dist/ziko-lottie.js"></script>
     <script>
     const Lottie=ZikoLottie("https://assets1.lottiefiles.com/private_files/lf30_q2okh8lh.json")
@@ -37,7 +36,11 @@ Lottie player element for zikojs
             .onPtrLeave(e=>e.target.pause())
     Ziko.App(
      Lottie
-   ).vertical(0,0)
+   ).vertical(0,0).style({
+     width:"100vw",
+     height:"100vh",
+     margin:0
+   })
     </script>
 </body>
 </html>
