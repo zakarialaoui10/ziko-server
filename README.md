@@ -37,9 +37,9 @@ Lottie player element for zikojs
     Ziko.App(
      Lottie
    ).vertical(0,0).style({
-     width:"100vw",
-     height:"100vh",
-     margin:0
+     width:"90vw",
+     height:"90vh",
+     margin:"auto",
    })
     </script>
 </body>
