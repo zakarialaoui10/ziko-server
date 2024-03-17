@@ -27,6 +27,7 @@
   },
   "homepage": "https://github.com/zakarialaoui10/ziko-lottie#readme",
   "dependencies": {
+    "@lottiefiles/lottie-player": "^2.0.4",
     "lottie-web": "^5.12.2"
   },
   "devDependencies": {
