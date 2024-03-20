@@ -1,27 +1,33 @@
-import Ziko from "ziko";
-import lottie from "lottie-web"
-class ZikoLottiePlayer extends Ziko.ZikoUIElement{
-    constructor(src){
-        super("figure","figure");
-        this.lottie=lottie.loadAnimation({
-            container: this.element,
-            renderer: 'svg',
-            path: src
-          });
-        src instanceof Object ? Object.assign(this.lottie,{animationData:src}) : Object.assign(this.lottie,{src})
+import {ZikoUIElement} from "ziko"
+import * as lottie from "@lottiefiles/lottie-player"
+class ZikoLottiePlayer extends ZikoUIElement{
+    constructor(src,width,height){
+        super("lottie-player","ZikoLottie");
+        this.element.src=src;
+        this.size(width,height);
+        this.setAttr("aria-label","Lottie animation");
+        this.setAttr("aria-describedby",`lottie-player-description-id`);
+        this.render();
+    }
+    description(){
+
     }
     play(){
-        this.lottie.play();
+        this.element.play();
         return this;
     }
     pause(){
-        this.lottie.pause();
+        this.element.pause();
         return this;
     }
-    destroy(){
-        this.lottie.destroy();
+    useControls(use=true){
+        this.element.controls=use;
+        return this;
+    }
+    setMode(mode="normal"){
+        this.element.mode=mode;
         return this;
     }
 }
-const ZikoLottie=(src)=>new ZikoLottiePlayer(src);
+const ZikoLottie=(src = "https://assets3.lottiefiles.com/packages/lf20_UJNc2t.json",width,height)=>new ZikoLottiePlayer(src,width,height);
 export default ZikoLottie
