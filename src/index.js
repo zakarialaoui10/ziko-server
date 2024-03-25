@@ -24,6 +24,10 @@ class ZikoLottiePlayer extends ZikoUIElement{
         this.element.controls=use;
         return this;
     }
+    toggleControls(){
+        this.element.controls=!this.element.controls;
+        return this;
+    }
     setMode(mode="normal"){
         this.element.mode=mode;
         return this;

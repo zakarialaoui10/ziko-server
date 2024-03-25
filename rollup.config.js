@@ -30,6 +30,9 @@ export default {
     format: 'umd',
     name:"ZikoLottie",
     banner,
+    globals:{
+      "ziko":"Ziko"
+    }
   },
   {
     file: 'dist/ziko-lottie.min.js',
