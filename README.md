@@ -11,8 +11,8 @@ Lottie player element for zikojs
   import {App} from "ziko"
   import ZikoLottie from "ziko-lottie";
   const Lottie=ZikoLottie("https://assets1.lottiefiles.com/private_files/lf30_q2okh8lh.json").size("220px","200px")
-  Lottie.onPtrEnter(e=>e.target.play())
-  Lottie.onPtrLeave(e=>e.target.pause())
+  Lottie.onPtrEnter(e=>e.target.pause())
+  Lottie.onPtrLeave(e=>e.target.play())
   App(
     Lottie
   ).vertical(0,0)
