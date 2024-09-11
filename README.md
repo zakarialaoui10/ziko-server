@@ -1,4 +1,4 @@
-# ziko-lottie 
+# ziko-lottie  
 Lottie player element for zikojs
 # Install
 ```bash 
