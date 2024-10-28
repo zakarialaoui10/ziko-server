@@ -1,4 +1,4 @@
-<!-- use template --> 
+<!-- use template / deprecated--> 
 # ziko-lottie   
 Lottie player element for zikojs
 # Install
