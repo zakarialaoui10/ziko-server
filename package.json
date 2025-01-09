@@ -9,6 +9,14 @@
     "dist",
     "LICENCE"
   ],
+  "exports":{
+    "./entry-client":{
+      "import" : "./src/entry-client.js"
+    },
+    "./entry-server":{
+      "import" : "./src/entry-server.js"
+    }
+  },
   "keywords": [
     "ziko",
     "ssr"

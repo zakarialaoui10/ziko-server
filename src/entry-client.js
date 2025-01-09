@@ -3,7 +3,7 @@ import {
     routesMatcher,
     dynamicRoutesParser,
     isDynamic,
-  } from "./utils";
+  } from "./utils/index.js";
 // const pages = import.meta.glob("./pages/**/*{.js,.mdz}");
 export function EntryClient({pages}={}){
   addEventListener("load", (async () => {

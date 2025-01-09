@@ -1,13 +1,11 @@
 import {JSDOM} from "jsdom"
-import {customPath, routesMatcher, dynamicRoutesParser, isDynamic} from "../utils"
+import {customPath, routesMatcher, dynamicRoutesParser, isDynamic} from "./utils/index.js"
 const {document} = new JSDOM().window;
 globalThis.document = document
 
 
-const pages = import.meta.glob("./pages/**/*{.js,.mdz}")
-
-
-export async function render(path) {
+export function EntryServer({pages}={}){
+  return async function render(path) {
   const routes = Object.keys(pages)
   const root = "./pages/";
   const pairs = {}
@@ -32,7 +30,4 @@ export async function render(path) {
     html
    }
 }
-
-export{
-  pages
 }
