@@ -1,11 +1,9 @@
 {
-  "name": "ziko-lottie",
-  "version": "0.0.2",
-  "description": "Lottie player element for zikojs",
+  "name": "ziko-server",
+  "version": "0.0.0",
+  "description": "server side rendering in zikojs",
   "type": "module",
   "source": "src/index.js",
-  "main": "dist/ziko-lottie.cjs",
-  "module": "dist/ziko-lottie.mjs",
   "files": [
     "src",
     "dist",
@@ -13,10 +11,7 @@
   ],
   "keywords": [
     "ziko",
-    "Lottie",
-    "Animation",
-    "After Effect",
-    "Figma"
+    "ssr"
   ],
   "scripts": {
     "dev": "rollup -c rollup.config.js -w",
@@ -25,23 +20,27 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/zakarialaoui10/ziko-lottie.git"
+    "url": "git+https://github.com/zakarialaoui10/ziko-server.git"
   },
   "author": "zakaria elalaoui",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/zakarialaoui10/ziko-lottie/issues"
+    "url": "https://github.com/zakarialaoui10/ziko-server/issues"
   },
-  "homepage": "https://github.com/zakarialaoui10/ziko-lottie#readme",
-  "dependencies": {
-    "@lottiefiles/lottie-player": "^2.0.4",
-    "lottie-web": "^5.12.2",
-    "ziko": "^0.0.4"
-  },
+  "homepage": "https://github.com/zakarialaoui10/ziko-server#readme",
   "devDependencies": {
     "@rollup/plugin-commonjs": "^25.0.7",
     "@rollup/plugin-node-resolve": "^15.2.3",
     "@rollup/plugin-terser": "^0.4.4",
     "rollup": "^4.13.0"
+  },
+  "dependencies": {
+    "compression": "^1.7.5",
+    "cross-env": "^7.0.3",
+    "express": "^4.21.2",
+    "jsdom": "^26.0.0",
+    "sirv": "^3.0.0",
+    "vite": "^6.0.7",
+    "ziko": "^0.0.23"
   }
 }
