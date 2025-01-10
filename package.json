@@ -10,6 +10,9 @@
     "LICENCE"
   ],
   "exports":{
+    "./server":{
+      "import" : "./src/server.js"
+    },
     "./entry-client":{
       "import" : "./src/entry-client.js"
     },
