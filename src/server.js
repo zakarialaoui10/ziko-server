@@ -2,12 +2,16 @@ import fs from 'node:fs/promises'
 import express from 'express'
 import path from 'node:path'
 import { pathToFileURL } from 'node:url'
+import { HTMLTemplate } from './utils/html-template.js'
 
 export async function createServer({ baseDir = process.cwd() } = {}) {
   // Constants
   const isProduction = process.env.NODE_ENV === 'production'
   const port = process.env.PORT || 5173
   const base = process.env.BASE || '/'
+
+  // fs.mkdir(path.join(baseDir, './dist/client'), { recursive: true })
+  // fs.writeFile(path.join(baseDir, './dist/client/index2.html'), HTMLTemplate, 'utf-8') 
 
   // Cached production assets
   const templateHtml = isProduction
