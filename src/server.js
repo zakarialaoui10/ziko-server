@@ -48,7 +48,7 @@ export async function createServer({ baseDir = process.cwd() } = {}) {
         // Always read fresh template in development
         template = await fs.readFile(path.join(baseDir, './index.html'), 'utf-8')
         template = await vite.transformIndexHtml(url, template)
-        render = (await vite.ssrLoadModule('/src/entry-server.js')).render
+        render = (await vite.ssrLoadModule('/src/entry-server.js')).default
       } else {
         template = templateHtml
 
@@ -56,7 +56,7 @@ export async function createServer({ baseDir = process.cwd() } = {}) {
         const entryServerPath = pathToFileURL(
           path.join(baseDir, './dist/server/entry-server.js')
         ).href
-        render = (await import(entryServerPath)).render
+        render = (await import(entryServerPath)).default
       }
 
       const rendered = await render(url)

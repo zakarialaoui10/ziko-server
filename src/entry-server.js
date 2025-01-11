@@ -31,3 +31,5 @@ export function EntryServer({pages}={}){
    }
 }
 }
+
+export const defineServerEntry=({pages})=>()=>EntryServer({pages})
