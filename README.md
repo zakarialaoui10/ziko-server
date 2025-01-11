@@ -1,6 +1,14 @@
+> [!NOTE]  
+> This project is part of the [ZikoJS](https://github.com/zakarialaoui10/ziko.js) ecosystem.
+
 # Ziko-server
 
 Provides server-side rendering with file-based routing for ZikoJS, ***featuring zero configuration client-side hydration.*** 
+
+# Features 
+- Server Side Rendering 
+- Client Side Hydration with no additional config 
+- File Based Routing 
 
 # Project Structure
 ```
@@ -40,3 +48,12 @@ EntryClient({
 })
 ```
 
+# ⭐️ Show your support
+
+If you appreciate the project, kindly demonstrate your support by giving it a star!<br>
+
+[![Star](https://img.shields.io/github/stars/zakarialaoui10/mdzjs?style=social)](https://github.com/zakarialaoui10/mdzjs)
+<!--## Financial support-->
+# License 
+This projet is licensed under the terms of MIT License 
+<img src="https://img.shields.io/github/license/zakarialaoui10/zikojs?color=rgb%2820%2C21%2C169%29" width="100" align="right">
