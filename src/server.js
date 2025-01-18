@@ -2,7 +2,7 @@ import fs from 'node:fs/promises'
 import express from 'express'
 import path from 'node:path'
 import { pathToFileURL } from 'node:url'
-import { HTMLTemplate } from './utils/html-template.js'
+// import { HTMLTemplate } from './utils/html-template.js'
 
 export async function createServer({ baseDir = process.cwd() } = {}) {
   // Constants
