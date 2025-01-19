@@ -9,20 +9,22 @@
     "dist",
     "LICENCE"
   ],
-  "exports":{
-    "./server":{
-      "import" : "./src/server.js"
+  "exports": {
+    "./server": {
+      "import": "./src/server.js"
     },
-    "./entry-client":{
-      "import" : "./src/entry-client.js"
+    "./entry-client": {
+      "import": "./src/entry-client.js"
     },
-    "./entry-server":{
-      "import" : "./src/entry-server.js"
+    "./entry-server": {
+      "import": "./src/entry-server.js"
     }
   },
   "keywords": [
     "ziko",
-    "ssr"
+    "ssr",
+    "rendering",
+    "hydration"
   ],
   "scripts": {
     "dev": "rollup -c rollup.config.js -w",
