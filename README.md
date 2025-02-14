@@ -52,7 +52,7 @@ EntryClient({
 
 If you appreciate the project, kindly demonstrate your support by giving it a star!<br>
 
-[![Star](https://img.shields.io/github/stars/zakarialaoui10/mdzjs?style=social)](https://github.com/zakarialaoui10/mdzjs)
+[![Star](https://img.shields.io/github/stars/zakarialaoui10/ziko-server?style=social)](https://github.com/zakarialaoui10/ziko-server)
 <!--## Financial support-->
 # License 
 This projet is licensed under the terms of MIT License 
