@@ -3,6 +3,7 @@ import express from 'express'
 import path from 'node:path'
 import { pathToFileURL } from 'node:url'
 // import { HTMLTemplate } from './utils/html-template.js'
+
 export async function createServer({ baseDir = process.cwd() } = {}) {
   // Constants
   const isProduction = process.env.NODE_ENV === 'production'
@@ -61,11 +62,13 @@ export async function createServer({ baseDir = process.cwd() } = {}) {
         ).href
         render = (await import(entryServerPath)).default
       }
-      console.log(1)
+
       const rendered = await render(url)
+      const page = await rendered(url)
+      console.log(page)
       const html = template
-        .replace(`<!--app-head-->`, rendered.head ?? '')
-        .replace(`<!--app-html-->`, rendered.html ?? '')
+        .replace(`<!--app-head-->`, page.head ?? '')
+        .replace(`<!--app-html-->`, page.html ?? '')
 
       res.status(200).set({ 'Content-Type': 'text/html' }).send(html)
     } catch (e) {
