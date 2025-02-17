@@ -15,18 +15,19 @@ export function EntryClient({pages}={}){
       const component = await module.default;
       Object.assign(pairs, { [customPath(routes[i], root)]: component });
     }
-    function hydrate(path) {
-      console.log("client");
+    async function hydrate(path) {
+      // console.log("client");
       let [mask, callback] = Object.entries(pairs).find(([route]) =>
         routesMatcher(route, `/${path}`),
       );
-      console.log({ mask, callback });
+      // console.log({ mask, callback });
       let UIElement;
       if (isDynamic(mask)) {
         const params = dynamicRoutesParser(mask, `/${path}`);
-        console.log({ params });
+        // console.log({ params });
         UIElement = callback.call(this, params);
-      } else UIElement = callback();
+      } 
+      else UIElement = await callback();
       document.body.replaceWith(UIElement.element);
     }
     hydrate(location.pathname.slice(1));

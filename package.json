@@ -1,6 +1,6 @@
 {
   "name": "ziko-server",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "server side rendering in zikojs",
   "type": "module",
   "source": "src/index.js",
