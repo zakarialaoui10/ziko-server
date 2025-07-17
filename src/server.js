@@ -65,7 +65,7 @@ export async function createServer({ baseDir = process.cwd() } = {}) {
 
       const rendered = await render(url)
       const page = await rendered(url)
-      console.log(page)
+      // console.log(page)
       const html = template
         .replace(`<!--app-head-->`, page.head ?? '')
         .replace(`<!--app-html-->`, page.html ?? '')

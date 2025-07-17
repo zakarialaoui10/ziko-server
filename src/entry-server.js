@@ -1,7 +1,7 @@
-import {JSDOM} from "jsdom"
-import {customPath, routesMatcher, dynamicRoutesParser, isDynamic} from "./utils/index.js"
-const {document} = new JSDOM().window;
-globalThis.document = document
+// import {JSDOM} from "jsdom"
+import {customPath, routesMatcher, dynamicRoutesParser, isDynamic, renderToString} from "./utils/index.js"
+// const {document} = new JSDOM().window;
+// globalThis.document = document
 
 
 export function EntryServer({pages}={}){
@@ -25,7 +25,7 @@ export function EntryServer({pages}={}){
   else UIElement = await callback()
   // console.log(UIElement)
 
-  const html = UIElement.element.outerHTML
+  const html = renderToString(UIElement)
   return { 
     // head,
     html
