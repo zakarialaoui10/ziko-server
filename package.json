@@ -1,6 +1,6 @@
 {
   "name": "ziko-server",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "server side rendering in zikojs",
   "type": "module",
   "source": "src/index.js",
@@ -10,6 +10,9 @@
     "LICENCE"
   ],
   "exports": {
+    ".":{
+      "import" : "./src/index.js"
+    },
     "./server": {
       "import": "./src/server.js"
     },
