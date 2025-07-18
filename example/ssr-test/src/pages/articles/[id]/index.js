@@ -1,6 +1,7 @@
 import {h1, Suspense} from "ziko"
 
 const ui=async (id)=>{
+    console.log({id})
     const api = await fetch(`https://jsonplaceholder.typicode.com/todos/${id}`)
     const res = await api.json()
     return h1(res.title)

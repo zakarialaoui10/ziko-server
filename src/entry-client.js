@@ -33,3 +33,6 @@ export function EntryClient({pages}={}){
     hydrate(location.pathname.slice(1));
   }))
 }
+
+// const pages = import.meta.glob("./pages/**/*{.js,.mdz}")
+// console.log(pages)
