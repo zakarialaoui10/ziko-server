@@ -4,7 +4,6 @@ import {
     dynamicRoutesParser,
     isDynamic,
   } from "./utils/index.js";
-// const pages = import.meta.glob("./pages/**/*{.js,.mdz}");
 export function EntryClient({pages}={}){
   addEventListener("load", (async () => {
     const routes = Object.keys(pages);
@@ -16,15 +15,12 @@ export function EntryClient({pages}={}){
       Object.assign(pairs, { [customPath(routes[i], root)]: component });
     }
     async function hydrate(path) {
-      // console.log("client");
       let [mask, callback] = Object.entries(pairs).find(([route]) =>
         routesMatcher(route, `/${path}`),
       );
-      // console.log({ mask, callback });
       let UIElement;
       if (isDynamic(mask)) {
         const params = dynamicRoutesParser(mask, `/${path}`);
-        // console.log({ params });
         UIElement = callback.call(this, params);
       } 
       else UIElement = await callback();
@@ -33,6 +29,3 @@ export function EntryClient({pages}={}){
     hydrate(location.pathname.slice(1));
   }))
 }
-
-// const pages = import.meta.glob("./pages/**/*{.js,.mdz}")
-// console.log(pages)

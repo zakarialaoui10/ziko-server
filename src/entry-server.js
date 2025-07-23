@@ -16,12 +16,12 @@ export function EntryServer({ pages } = {}) {
       const module = await pages[routes[i]]();
       const component = await module.default;
       Object.assign(pairs, { [customPath(routes[i], root)]: component });
-      console.log({component})
+      // console.log({component})
     }
     let [mask, callback] = Object.entries(pairs).find(([route]) =>
       routesMatcher(route, `/${path}`),
     );
-    console.log({mask, callback})
+    // console.log({mask, callback})
     let UIElement;
     if (isDynamic(mask)) {
       const params = dynamicRoutesParser(mask, `/${path}`);

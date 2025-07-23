@@ -2,16 +2,11 @@ import fs from "node:fs/promises";
 import express from "express";
 import path from "node:path";
 import { pathToFileURL } from "node:url";
-// import { HTMLTemplate } from './utils/html-template.js'
 
 export async function createServer({ baseDir = process.cwd() } = {}) {
-  // Constants
   const isProduction = process.env.NODE_ENV === "production";
   const port = process.env.PORT || 5173;
   const base = process.env.BASE || "/";
-
-  // fs.mkdir(path.join(baseDir, './dist/client'), { recursive: true })
-  // fs.writeFile(path.join(baseDir, './dist/client/index2.html'), HTMLTemplate, 'utf-8')
 
   // Cached production assets
   const templateHtml = isProduction
@@ -70,7 +65,6 @@ export async function createServer({ baseDir = process.cwd() } = {}) {
       }
       const rendered = await render(url);
       const page = await rendered(url);
-      // console.log(page)
       const html = template
         .replace(`<!--app-head-->`, page.head ?? "")
         .replace(`<!--app-html-->`, page.html ?? "");
@@ -78,7 +72,6 @@ export async function createServer({ baseDir = process.cwd() } = {}) {
       res.status(200).set({ "Content-Type": "text/html" }).send(html);
     } catch (e) {
       vite?.ssrFixStacktrace(e);
-      console.log(e.stack);
       res.status(500).end(e.stack);
     }
   });
