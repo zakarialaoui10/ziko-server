@@ -5,7 +5,7 @@ import {
   isDynamic,
 } from "./utils/index.js";
 
-import { renderToString } from "./utils/renderToString.js"
+import { renderToString } from "./server-only-utils/renderToString.js"
 
 export function EntryServer({ pages } = {}) {
   return async function render(path) {
