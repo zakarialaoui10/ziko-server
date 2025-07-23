@@ -21,13 +21,21 @@
     },
     "./entry-server": {
       "import": "./src/entry-server.js"
+    },
+    "./utils" : {
+      "import" : "./src/utils/index.js"
+    },
+    "./server-only-utils":{
+      "import" : "./src/server-only-utils/index.js"
     }
   },
   "keywords": [
     "ziko",
+    "zikojs",
     "ssr",
     "rendering",
-    "hydration"
+    "hydration",
+    "server"
   ],
   "scripts": {
     "dev": "rollup -c rollup.config.js -w",
