@@ -1,6 +1,6 @@
 {
   "name": "ziko-server",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "server side rendering in zikojs with file-based-routing and client side hydration",
   "type": "module",
   "source": "src/index.js",
@@ -10,8 +10,8 @@
     "LICENCE"
   ],
   "exports": {
-    ".":{
-      "import" : "./src/index.js"
+    ".": {
+      "import": "./src/index.js"
     },
     "./server": {
       "import": "./src/server.js"
@@ -22,11 +22,11 @@
     "./entry-server": {
       "import": "./src/entry-server.js"
     },
-    "./utils" : {
-      "import" : "./src/utils/index.js"
+    "./utils": {
+      "import": "./src/utils/index.js"
     },
-    "./server-only-utils":{
-      "import" : "./src/server-only-utils/index.js"
+    "./server-only-utils": {
+      "import": "./src/server-only-utils/index.js"
     }
   },
   "keywords": [
@@ -59,13 +59,14 @@
     "rollup": "^4.13.0"
   },
   "dependencies": {
-    "compression": "^1.7.5",
+    "compression": "^1.8.1",
     "cross-env": "^7.0.3",
-    "express": "^4.21.2",
+    "express": "^5.1.0",
     "fast-glob": "^3.3.3",
     "jsdom": "^26.0.0",
-    "sirv": "^3.0.0",
-    "vite": "^6.0.7",
-    "ziko": "^0.0.27"
+    "sirv": "^3.0.1",
+    "vite": "^6.3.5",
+    "ziko": "^0.0.27",
+    "ziko-server": "^0.0.3"
   }
 }
