@@ -5,6 +5,7 @@ import {
     isDynamic,
   } from "./utils/index.js";
 export function EntryClient({pages}={}){
+  pages = import.meta.glob("/src/pages/**/*{.js,.mdz}")
   addEventListener("load", (async () => {
     const routes = Object.keys(pages);
     const root = "./pages/";

@@ -13,6 +13,9 @@
     ".": {
       "import": "./src/index.js"
     },
+    "./pages": {
+      "import": "./src/pages.js"
+    },
     "./server": {
       "import": "./src/server-impl.js"
     },

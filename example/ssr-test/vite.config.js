@@ -2,14 +2,18 @@ import { defineConfig } from 'vite';
 export default defineConfig({
   plugins: [
     {
-      name: 'virtual-entry',
+      name: 'ziko-entry-client',
       resolveId(id) {
-        if (id === 'virtual:main') return id;
+        if (id === 'ziko:entry-client') return id;
       },
       load(id) {
-        if (id === 'virtual:main') {
+        if (id === 'ziko:entry-client') {
           return `
-          import "ziko-server/entry-client"
+          console.log(1)
+          // import {EntryClient} from "ziko-server/entry-client";
+          // EntryClient({
+          //   pages : import.meta.glob("./pages/**/*{.js,.mdz}")
+          // })
           `;
         }
       }
