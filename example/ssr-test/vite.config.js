@@ -24,9 +24,7 @@ console.log(1)`.trim();
           case "\0ziko:entry-server":
             return `
 import { EntryServer } from "ziko-server/entry-server";
-export default EntryServer({
-  pages: import.meta.glob('/src/pages/**/*{.js,.mdz}')
-}); `.trim();
+export default EntryServer({}); `.trim();
          case "\0ziko:server":
             return `
 import { createServer } from "ziko-server/server";

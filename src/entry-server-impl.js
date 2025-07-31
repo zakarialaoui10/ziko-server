@@ -4,11 +4,9 @@ import {
   dynamicRoutesParser,
   isDynamic,
 } from "./utils/index.js";
-
 import { renderToString } from "./server-only-utils/renderToString.js"
-
-export function EntryServer({ pages } = {}) {
-  // pages = import.meta.glob("/src/pages/**/*{.js,.mdz}") To Do 
+export function EntryServer() {
+  const pages = import.meta.glob("/src/pages/**/*{.js,.mdz}") 
   return async function render(path) {
     const routes = Object.keys(pages);
     const root = "./pages/";
