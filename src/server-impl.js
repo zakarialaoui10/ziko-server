@@ -19,13 +19,9 @@ export async function createServer({ baseDir = process.cwd() } = {}) {
   </body>
   </html>
   `
-  // Create http server
   const app = express();
-
-  // Add Vite or respective production middlewares
-  /** @type {import('vite').ViteDevServer | undefined} */
   let vite;
-  if (!isProduction) {
+  if(!isProduction){
     const { createServer } = await import("vite");
     vite = await createServer({
       server: { middlewareMode: true },
@@ -43,26 +39,21 @@ export async function createServer({ baseDir = process.cwd() } = {}) {
     );
   }
 
-  // Serve HTML
-  app.use("*", async (req, res) => {
+app.use("*", async (req, res) => {
     try {
       const url = req.originalUrl.replace(base, "");
-
-      /** @type {string} */
       let template;
-      /** @type {import('./entry-server.js').render} */
       let render;
       if (!isProduction) {
         template = HTML_TEMPLATE
         template = await vite.transformIndexHtml(url, template);
         render = (await vite.ssrLoadModule("/src/entry-server.js")).default;
+        // const File = (await vite.ssrLoadModule("/src/entry-server")).
+        // console.log({File})
       } else {
         template = HTML_TEMPLATE;
-
         // Convert path to a file:// URL for ESM import
-        const entryServerPath = pathToFileURL(
-          path.join(baseDir, "./dist/server/entry-server.js"),
-        ).href;
+        const entryServerPath = pathToFileURL(path.join(baseDir, "./dist/server/entry-server.js")).href;
         render = (await import(entryServerPath)).default;
       }
       const rendered = await render(url);
