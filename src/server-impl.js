@@ -1,4 +1,3 @@
-import fs from "node:fs/promises";
 import express from "express";
 import path from "node:path";
 import { pathToFileURL } from "node:url";
@@ -8,11 +7,18 @@ export async function createServer({ baseDir = process.cwd() } = {}) {
   const port = process.env.PORT || 5173;
   const base = process.env.BASE || "/";
 
-  // Cached production assets
-  const templateHtml = isProduction
-    ? await fs.readFile(path.join(baseDir, "./dist/client/index.html"), "utf-8")
-    : "";
-
+  const HTML_TEMPLATE = `
+  <!doctype html>
+  <html>
+  <head>
+  <title> Ziko - SSR - Template </title>
+    <!--app-head-->
+  </head>
+  <body>
+    <!--app-html-->
+  </body>
+  </html>
+  `
   // Create http server
   const app = express();
 
@@ -47,15 +53,11 @@ export async function createServer({ baseDir = process.cwd() } = {}) {
       /** @type {import('./entry-server.js').render} */
       let render;
       if (!isProduction) {
-        // Always read fresh template in development
-        template = await fs.readFile(
-          path.join(baseDir, "./index.html"),
-          "utf-8",
-        );
+        template = HTML_TEMPLATE
         template = await vite.transformIndexHtml(url, template);
         render = (await vite.ssrLoadModule("/src/entry-server.js")).default;
       } else {
-        template = templateHtml;
+        template = HTML_TEMPLATE;
 
         // Convert path to a file:// URL for ESM import
         const entryServerPath = pathToFileURL(

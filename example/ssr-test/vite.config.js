@@ -9,7 +9,7 @@ export default defineConfig({
           [
             "ziko:entry-client",
             "ziko:entry-server",
-            "virtual:index.html",
+            "ziko:server",
           ].includes(id)
         ) return "\0" + id;
       },
@@ -27,6 +27,11 @@ import { EntryServer } from "ziko-server/entry-server";
 export default EntryServer({
   pages: import.meta.glob('/src/pages/**/*{.js,.mdz}')
 }); `.trim();
+         case "\0ziko:server":
+            return `
+import { createServer } from "ziko-server/server";
+createServer()    
+            `.trim()
         }
       },
       // Emit the virtual modules as chunks in build (production) only
@@ -62,8 +67,10 @@ export default EntryServer({
               ],
             };
           }
-        } else {
+        } 
+        else {
           // dev mode: inject script with virtual module path using /@id/ prefix
+          // return ; // To debug server
           return {
             html,
             tags: [
@@ -80,4 +87,11 @@ export default EntryServer({
       },
     },
   ],
+  // build:{
+  //   ssr : true,
+  //   rollupOptions:{
+  //     input : 'ziko:server'
+  //   },
+  //   outDir: 'dist-v/server'
+  // }
 });
