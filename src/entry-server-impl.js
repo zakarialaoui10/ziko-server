@@ -8,7 +8,7 @@ import {
 import { renderToString } from "./server-only-utils/renderToString.js"
 
 export function EntryServer({ pages } = {}) {
-  pages = import.meta.glob("/src/pages/**/*{.js,.mdz}")
+  // pages = import.meta.glob("/src/pages/**/*{.js,.mdz}") To Do 
   return async function render(path) {
     const routes = Object.keys(pages);
     const root = "./pages/";
