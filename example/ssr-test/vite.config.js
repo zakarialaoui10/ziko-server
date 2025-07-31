@@ -4,17 +4,18 @@ export default defineConfig({
     {
       name: 'ziko-entry-client',
       resolveId(id) {
-        if (id === 'ziko:entry-client') return id;
+        if (['ziko:entry-client, ziko:entry-server'].includes(id)) return id;
       },
       load(id) {
-        if (id === 'ziko:entry-client') {
-          return `
-          console.log(1)
-          // import {EntryClient} from "ziko-server/entry-client";
-          // EntryClient({
-          //   pages : import.meta.glob("./pages/**/*{.js,.mdz}")
-          // })
-          `;
+        switch(id){
+          case 'ziko:entry-client' : return `
+            import {EntryClient} from "ziko-server/entry-client";
+            EntryClient({})
+          `
+          case 'ziko:entry-server' : return `
+            import {EntryClient} from "ziko-server/entry-server";
+            EntryClient({})
+          ` 
         }
       }
     }
