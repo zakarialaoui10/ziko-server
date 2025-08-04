@@ -1,5 +1,5 @@
-import {defineServerEntry, EntryServer} from "ziko-server/entry-server";
+import {EntryServer} from "ziko-server/entry-server";
 export default EntryServer
-// export {
-//     EntryServer
-// }
+// export default ()=>EntryServer({
+//     pages : import.meta.glob("/src/pages/**/*{.js,.mdz}") 
+// })

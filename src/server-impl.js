@@ -48,8 +48,6 @@ app.use("*", async (req, res) => {
         template = HTML_TEMPLATE
         template = await vite.transformIndexHtml(url, template);
         render = (await vite.ssrLoadModule("/src/entry-server.js")).default;
-        // const File = (await vite.ssrLoadModule("/src/entry-server")).
-        // console.log({File})
       } else {
         template = HTML_TEMPLATE;
         // Convert path to a file:// URL for ESM import

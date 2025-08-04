@@ -9,8 +9,7 @@
         "build:client": "vite build --outDir dist/client",
         "build:server": "vite build --ssr src/entry-server.js --outDir dist/server",
         "preview": "cross-env NODE_ENV=production node src/server",
-
-        "dev-v" : "vite",
+        "dev-v": "vite",
         "build-v": "npm run build:client-v && npm run build:server-v",
         "build:client-v": "vite build --outDir dist-v/client",
         "build:server-v": "vite build",
@@ -20,7 +19,7 @@
         "express": "^5.0.1",
         "vite": "^6.0.7",
         "ziko": "^0.0.22",
-        "ziko-server": "^0.8.1"
+        "ziko-server": "^0.8.2"
     },
     "devDependencies": {
         "cross-env": "^7.0.3"
