@@ -5,10 +5,10 @@ import {
   isDynamic,
 } from "./utils/index.js";
 import { renderToString } from "./server-only-utils/renderToString.js";
-import {pages} from "virtual:routes-map"
+// import {pages} from "virtual:routes-map"
 // console.log({pagesssr: pages})
 
-export function EntryServer() {
+export function EntryServer({pages}) {
   // const pages = import.meta.glob("/src/pages/**/*{.js,.mdz}") 
   return async function render(path) {
     const routes = Object.keys(pages);

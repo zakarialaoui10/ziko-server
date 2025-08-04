@@ -1,6 +1,6 @@
 {
   "name": "ziko-server",
-  "version": "0.8.2",
+  "version": "0.8.3",
   "description": "server side rendering in zikojs with file-based-routing and client side hydration",
   "type": "module",
   "source": "src/index.js",

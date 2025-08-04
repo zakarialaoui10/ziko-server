@@ -4,7 +4,7 @@ import VitePluginZikoEntries from "./plugins/ziko-entries.js";
 
 export default defineConfig({
   plugins: [
-    VitePluginRoutesMap(),
+    // VitePluginRoutesMap(),
     VitePluginZikoEntries()
     
   ],
