@@ -6,34 +6,35 @@ import {
 } from "./utils/index.js";
 import { renderToString } from "./server-only-utils/renderToString.js";
 import { globImports } from "ziko-server/server-only-utils";
-const pages = await globImports("./src/pages/**/*{.js,.mdz}") 
+import { prerender } from "./prerender.js";
+
+// import { join } from "path";
+// import fs from "fs"
+
+prerender()
 
 export function EntryServer() {
   return async function render(path) {
-    const routes = Object.keys(pages);
-    const root = "./pages/";
-    const pairs = {};
-    for (let i = 0; i < routes.length; i++) {
-      const module = await pages[routes[i]]();
-      const component = await module.default;
-      Object.assign(pairs, { [customPath(routes[i], root)]: component });
-    }
+
+    const pairs = await globImports("./src/pages/**/*{.js,.mdz}")
     let [mask, callback] = Object.entries(pairs).find(([route]) =>
       routesMatcher(route, `/${path}`),
     );
-    console.log({mask, callback})
+    // console.log({mask, callback})
 
     let UIElement;
     if (isDynamic(mask)) {
       const params = dynamicRoutesParser(mask, `/${path}`);
-      UIElement = callback.call(this, params);
+      UIElement = await callback.call(this, params);
     } 
     else UIElement = await callback();
 
     const html = renderToString(UIElement);
 
-    // const OutDirPath = `dist${mask}`
-    // console.log(OutDirPath)
+    // console.log({html})
+
+    // const OutDirPath = `dist2${mask}`
+    // console.log({OutDirPath})
     // const FilePath = join(OutDirPath, 'index.html');
     // const htmlContent = `<!DOCTYPE html><html><body><h1>${html}</h1></body></html>`;
     // fs.mkdir(OutDirPath,{recursive : true})

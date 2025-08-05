@@ -65,6 +65,7 @@
     "compression": "^1.8.1",
     "cross-env": "^7.0.3",
     "express": "^4.21.2",
+    "extendom": "^0.0.0",
     "fast-glob": "^3.3.3",
     "jsdom": "^26.0.0",
     "sirv": "^3.0.1",

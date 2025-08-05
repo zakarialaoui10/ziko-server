@@ -49,7 +49,9 @@ createServer();
       // });
     },
 
-    transformIndexHtml(html, ctx) {
+    transformIndexHtml:{
+    order : 'post',
+    handler(html, ctx) {
       if (ctx.bundle) {
         const clientChunk = Object.values(ctx.bundle).find(
           (chunk) => chunk.name === "entry-client" && chunk.type === "chunk"
@@ -83,5 +85,6 @@ createServer();
 
       return html;
     },
+  }
   };
 }
