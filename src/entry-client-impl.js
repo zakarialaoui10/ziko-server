@@ -22,10 +22,10 @@ export function EntryClient({pages}={}){
       let UIElement;
       if (isDynamic(mask)) {
         const params = dynamicRoutesParser(mask, `/${path}`);
-        UIElement = callback.call(this, params);
+        UIElement = await callback.call(this, params);
       } 
       else UIElement = await callback();
-      document.body.replaceWith(UIElement.element);
+      document.body.replaceWith(UIElement.element);  // To Fix ( replace intercative elements only )
     }
     hydrate(location.pathname.slice(1));
   }))
