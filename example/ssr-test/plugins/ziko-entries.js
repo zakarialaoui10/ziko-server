@@ -15,8 +15,8 @@ export default function VitePluginZikoEntries() {
       switch (id) {
         case "\0ziko:entry-client":
           return `
-// import { EntryClient } from "ziko-server/entry-client";
-// export default EntryClient({});
+import { EntryClient } from "ziko-server/entry-client";
+export default EntryClient({});
           `.trim();
 
         case "\0ziko:entry-server":

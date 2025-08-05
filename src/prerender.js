@@ -1,5 +1,8 @@
 import { globImports } from "ziko-server/server-only-utils";
-import { renderToString } from "ziko-server/server-only-utils";
+import { 
+  renderToString,
+  writeToDist
+ } from "ziko-server/server-only-utils";
 
 const StaticRoutesMap = {
     "/articles/id/:id":[
@@ -49,24 +52,13 @@ async function prerender() {
         const res = await App();
         const html = renderToString(res)
         HTML.push({route, html})
-        writeToDist(route, html)
+        writeToDist({route, html})
     }
     // console.log({HTML})
 
 
-    return HTML;
+    // return HTML;
 }
 
-import fs from 'fs/promises';
-import path from 'path';
-
-async function writeToDist(route, html, outDir = 'dist2') {
-//   for (const { route, html } of htmlPages) {
-    const filePath = path.join(outDir, route === '/' ? '' : route, 'index.html');
-    await fs.mkdir(path.dirname(filePath), { recursive: true });
-    await fs.writeFile(filePath, html, 'utf8');
-    console.log(`✔️ Saved ${route} → ${filePath}`);
-//   }
-}
 
 export { prerender }
