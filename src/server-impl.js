@@ -2,6 +2,9 @@ import express from "express";
 import path from "node:path";
 import { pathToFileURL } from "node:url";
 
+import { prerender } from "./prerender.js";
+prerender()
+
 export async function createServer({ baseDir = process.cwd() } = {}) {
   const isProduction = process.env.NODE_ENV === "production";
   const port = process.env.PORT || 5173;

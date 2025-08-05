@@ -6,12 +6,6 @@ import {
 } from "./utils/index.js";
 import { renderToString } from "./server-only-utils/renderToString.js";
 import { globImports } from "ziko-server/server-only-utils";
-import { prerender } from "./prerender.js";
-
-// import { join } from "path";
-// import fs from "fs"
-
-prerender()
 
 export function EntryServer() {
   return async function render(path) {

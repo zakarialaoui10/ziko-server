@@ -28,7 +28,7 @@ async function resolveStaticRoutes(routes, StaticRoutesMap) {
           return encodeURIComponent(params[key]);
         });
         result[resolvedRoute] = () => handler(params);
-        console.log({handler})
+        // console.log({handler})
       }
     } else {
       result[routePattern] = handler;
@@ -40,15 +40,33 @@ async function resolveStaticRoutes(routes, StaticRoutesMap) {
 
 
 async function prerender() {
-
+    const HTML = []
     const pages = await globImports("./src/pages/**/*{.js,.mdz}") 
-    
-    const st = await resolveStaticRoutes(pages, StaticRoutesMap)
-    const App = st["/articles/id/1"] 
-    const res = await App()
-    const html = renderToString(res)
+    const StaticPags = await resolveStaticRoutes(pages, StaticRoutesMap)
 
-    // console.log(st)
+    for(let route in StaticPags){
+        const App = StaticPags[route];
+        const res = await App();
+        const html = renderToString(res)
+        HTML.push({route, html})
+        writeToDist(route, html)
+    }
+    // console.log({HTML})
+
+
+    return HTML;
+}
+
+import fs from 'fs/promises';
+import path from 'path';
+
+async function writeToDist(route, html, outDir = 'dist2') {
+//   for (const { route, html } of htmlPages) {
+    const filePath = path.join(outDir, route === '/' ? '' : route, 'index.html');
+    await fs.mkdir(path.dirname(filePath), { recursive: true });
+    await fs.writeFile(filePath, html, 'utf8');
+    console.log(`✔️ Saved ${route} → ${filePath}`);
+//   }
 }
 
 export { prerender }
