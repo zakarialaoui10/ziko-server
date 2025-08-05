@@ -5,11 +5,10 @@ import {
   isDynamic,
 } from "./utils/index.js";
 import { renderToString } from "./server-only-utils/renderToString.js";
-// import {pages} from "virtual:routes-map"
-// console.log({pagesssr: pages})
+import { globImports } from "ziko-server/server-only-utils";
+const pages = await globImports("./src/pages/**/*{.js,.mdz}") 
 
-export function EntryServer({pages}) {
-  // const pages = import.meta.glob("/src/pages/**/*{.js,.mdz}") 
+export function EntryServer() {
   return async function render(path) {
     const routes = Object.keys(pages);
     const root = "./pages/";
