@@ -1,6 +1,6 @@
 {
   "name": "ziko-server",
-  "version": "0.9.1",
+  "version": "0.9.2",
   "description": "server side rendering in zikojs with file-based-routing and client side hydration",
   "type": "module",
   "source": "src/index.js",
@@ -70,6 +70,6 @@
     "jsdom": "^26.0.0",
     "sirv": "^3.0.1",
     "vite": "^6.3.5",
-    "ziko": "^0.0.29"
+    "ziko": "^0.35.0"
   }
 }
