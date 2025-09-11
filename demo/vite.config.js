@@ -1,11 +1,14 @@
 import { defineConfig } from "vite";
-import VitePluginRoutesMap from "./plugins/vite-plugin-routes-map.js";
-import VitePluginZikoEntries from "./plugins/ziko-entries.js";
+import { ssr } from 'vite-plugin-ssr/plugin'
 
-import { spawn } from 'child_process';
+// import VitePluginRoutesMap from "./plugins/vite-plugin-routes-map.js";
+// import VitePluginZikoEntries from "./plugins/ziko-entries.js";
+
+// import { spawn } from 'child_process';
 
 export default defineConfig({
   plugins: [
+    ssr({ prerender: true })
     // VitePluginRoutesMap(),
     // VitePluginZikoEntries(),
     // {
@@ -27,10 +30,13 @@ export default defineConfig({
     
   ],
   // build:{
-  //   ssr : true,
+  //   // ssr : true,
+  //   ssrManifest : true,
   //   rollupOptions:{
-  //     input : 'ziko:server'
+  //     input : {
+  //       app : 'index.html'
+  //     }
   //   },
-  //   outDir: 'dist-v/server'
+  //   outDir: 'dist-v'
   // }
 });

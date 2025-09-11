@@ -20,6 +20,7 @@
         "ziko-server": "^0.9.4"
     },
     "devDependencies": {
-        "cross-env": "^7.0.3"
+        "cross-env": "^7.0.3",
+        "vite-plugin-ssr": "^0.4.85"
     }
 }
