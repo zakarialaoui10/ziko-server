@@ -1,5 +1,4 @@
 import { defineConfig } from "vite";
-import { ssr } from 'vite-plugin-ssr/plugin'
 
 // import VitePluginRoutesMap from "./plugins/vite-plugin-routes-map.js";
 // import VitePluginZikoEntries from "./plugins/ziko-entries.js";
@@ -8,7 +7,6 @@ import { ssr } from 'vite-plugin-ssr/plugin'
 
 export default defineConfig({
   plugins: [
-    ssr({ prerender: true })
     // VitePluginRoutesMap(),
     // VitePluginZikoEntries(),
     // {
