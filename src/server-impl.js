@@ -1,30 +1,25 @@
+import fs from "node:fs/promises";
 import express from "express";
 import path from "node:path";
 import { pathToFileURL } from "node:url";
-
-// import { prerender } from "./prerender.js";
-// prerender()
 
 export async function createServer({ baseDir = process.cwd() } = {}) {
   const isProduction = process.env.NODE_ENV === "production";
   const port = process.env.PORT || 5173;
   const base = process.env.BASE || "/";
 
-  const HTML_TEMPLATE = `
-  <!doctype html>
-  <html>
-  <head>
-  <title> Ziko - SSR - Template </title>
-    <!--app-head-->
-  </head>
-  <body>
-    <!--app-html-->
-  </body>
-  </html>
-  `
+  // Cached production assets
+  const templateHtml = isProduction
+    ? await fs.readFile(path.join(baseDir, "./dist/client/index.html"), "utf-8")
+    : "";
+
+  // Create http server
   const app = express();
+
+  // Add Vite or respective production middlewares
+  /** @type {import('vite').ViteDevServer | undefined} */
   let vite;
-  if(!isProduction){
+  if (!isProduction) {
     const { createServer } = await import("vite");
     vite = await createServer({
       server: { middlewareMode: true },
@@ -42,20 +37,31 @@ export async function createServer({ baseDir = process.cwd() } = {}) {
     );
   }
 
-app.use("*", async (req, res) => {
+  // Serve HTML
+  app.use("*", async (req, res) => {
     try {
       const url = req.originalUrl.replace(base, "");
+
+      /** @type {string} */
       let template;
+      /** @type {import('./entry-server.js').render} */
       let render;
       if (!isProduction) {
-        template = HTML_TEMPLATE
+        // Always read fresh template in development
+        template = await fs.readFile(
+          path.join(baseDir, "./index.html"),
+          "utf-8",
+        );
         template = await vite.transformIndexHtml(url, template);
         render = (await vite.ssrLoadModule("/src/entry-server.js")).default;
       } else {
-        template = HTML_TEMPLATE;
+        template = templateHtml;
+
         // Convert path to a file:// URL for ESM import
-        const entryServerPath = pathToFileURL(path.join(baseDir, "./dist/server/entry-server.js")).href;
-        render = (await import(entryServerPath)).default;
+        const entryServerPath = pathToFileURL(
+          path.join(baseDir, "./dist/server/entry-server.js"),
+        ).href;
+        render = (await import(/* @vite-ignore */entryServerPath)).default;
       }
       const rendered = await render(url);
       const page = await rendered(url);

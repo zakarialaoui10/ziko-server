@@ -1,7 +1,5 @@
 // vite-plugin-ziko-entries/index.js
 export default function VitePluginZikoEntries() {
-  let clientChunkFile = null;
-
   return {
     name: "vite-plugin-ziko-entries",
 
@@ -43,54 +41,51 @@ createServer();
         name: "entry-client",
       });
 
-      // Optional: also emit the server entry
+      // Uncomment to emit server entry in production too
       // this.emitFile({
-      //   type: "chunk",
-      //   id: "ziko:entry-server",
-      //   name: "entry-server",
+      //   type: 'chunk',
+      //   id: 'ziko:entry-server',
+      //   name: 'entry-server',
       // });
     },
 
-    transformIndexHtml: {
-      order: "post",
-      handler(html, ctx) {
-        if (!ctx.bundle) {
-          // Dev mode
+    transformIndexHtml:{
+    order : 'post',
+    handler(html, ctx) {
+      if (ctx.bundle) {
+        const clientChunk = Object.values(ctx.bundle).find(
+          (chunk) => chunk.name === "entry-client" && chunk.type === "chunk"
+        );
+
+
+        if (clientChunk) {
           return {
             html,
             tags: [
               {
                 tag: "script",
-                attrs: { type: "module", src: "/@id/ziko:entry-client" },
+                attrs: { type: "module", src: `/${clientChunk.fileName}` },
                 injectTo: "head",
               },
             ],
           };
         }
-
-        return html;
-      },
-    },
-
-    generateBundle(_, bundle) {
-      // Locate the built client chunk
-      const clientChunk = Object.values(bundle).find(
-        (chunk) => chunk.name === "entry-client" && chunk.type === "chunk"
-      );
-
-      if (!clientChunk) return;
-
-      clientChunkFile = "/" + clientChunk.fileName;
-
-      // Inject the script into all HTML assets
-      for (const [fileName, asset] of Object.entries(bundle)) {
-        if (fileName.endsWith(".html") && asset.type === "asset") {
-          asset.source = asset.source.replace(
-            "</head>",
-            `<script type="module" src="${clientChunkFile}"></script></head>`
-          );
-        }
+      } else {
+        // Dev mode
+        return {
+          html,
+          tags: [
+            {
+              tag: "script",
+              attrs: { type: "module", src: "/@id/ziko:entry-client", id:"ll" },
+              injectTo: "head",
+            },
+          ],
+        };
       }
+
+      return html;
     },
+  }
   };
 }

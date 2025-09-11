@@ -7,7 +7,7 @@ import { spawn } from 'child_process';
 export default defineConfig({
   plugins: [
     // VitePluginRoutesMap(),
-    VitePluginZikoEntries(),
+    // VitePluginZikoEntries(),
     // {
     //   name: 'run-virtual-node-process',
     //   configureServer() {
