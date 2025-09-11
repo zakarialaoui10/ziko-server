@@ -1,5 +1,7 @@
 // vite-plugin-ziko-entries/index.js
 export default function VitePluginZikoEntries() {
+  let clientChunkFile = null;
+
   return {
     name: "vite-plugin-ziko-entries",
 
@@ -41,50 +43,54 @@ createServer();
         name: "entry-client",
       });
 
-      // Uncomment to emit server entry in production too
+      // Optional: also emit the server entry
       // this.emitFile({
-      //   type: 'chunk',
-      //   id: 'ziko:entry-server',
-      //   name: 'entry-server',
+      //   type: "chunk",
+      //   id: "ziko:entry-server",
+      //   name: "entry-server",
       // });
     },
 
-    transformIndexHtml:{
-    order : 'post',
-    handler(html, ctx) {
-      if (ctx.bundle) {
-        const clientChunk = Object.values(ctx.bundle).find(
-          (chunk) => chunk.name === "entry-client" && chunk.type === "chunk"
-        );
-
-        if (clientChunk) {
+    transformIndexHtml: {
+      order: "post",
+      handler(html, ctx) {
+        if (!ctx.bundle) {
+          // Dev mode
           return {
             html,
             tags: [
               {
                 tag: "script",
-                attrs: { type: "module", src: `/${clientChunk.fileName}` },
+                attrs: { type: "module", src: "/@id/ziko:entry-client" },
                 injectTo: "head",
               },
             ],
           };
         }
-      } else {
-        // Dev mode
-        return {
-          html,
-          tags: [
-            {
-              tag: "script",
-              attrs: { type: "module", src: "/@id/ziko:entry-client" },
-              injectTo: "head",
-            },
-          ],
-        };
-      }
 
-      return html;
+        return html;
+      },
     },
-  }
+
+    generateBundle(_, bundle) {
+      // Locate the built client chunk
+      const clientChunk = Object.values(bundle).find(
+        (chunk) => chunk.name === "entry-client" && chunk.type === "chunk"
+      );
+
+      if (!clientChunk) return;
+
+      clientChunkFile = "/" + clientChunk.fileName;
+
+      // Inject the script into all HTML assets
+      for (const [fileName, asset] of Object.entries(bundle)) {
+        if (fileName.endsWith(".html") && asset.type === "asset") {
+          asset.source = asset.source.replace(
+            "</head>",
+            `<script type="module" src="${clientChunkFile}"></script></head>`
+          );
+        }
+      }
+    },
   };
 }

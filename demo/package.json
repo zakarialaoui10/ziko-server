@@ -16,9 +16,8 @@
         "preview-v": "node dist-v/server/entry-server.js"
     },
     "dependencies": {
-        "express": "^5.0.1",
         "vite": "^6.0.7",
-        "ziko-server": "^0.9.0"
+        "ziko-server": "^0.9.4"
     },
     "devDependencies": {
         "cross-env": "^7.0.3"
