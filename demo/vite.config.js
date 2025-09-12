@@ -1,31 +1,8 @@
 import { defineConfig } from "vite";
 
-// import VitePluginRoutesMap from "./plugins/vite-plugin-routes-map.js";
-// import VitePluginZikoEntries from "./plugins/ziko-entries.js";
-
-// import { spawn } from 'child_process';
-
 export default defineConfig({
   plugins: [
-    // VitePluginRoutesMap(),
-    // VitePluginZikoEntries(),
-    // {
-    //   name: 'run-virtual-node-process',
-    //   configureServer() {
-    //     const virtualCode = `
-    //       // const { createServer } = require('ziko-server/server');
-    //       // createServer();
-    //     `;
 
-    //     const proc = spawn('node', ['-e', virtualCode], {
-    //       stdio: 'inherit',
-    //       shell: true,
-    //     });
-
-    //     process.on('exit', () => proc.kill());
-    //   }
-    // }
-    
   ],
   // build:{
   //   // ssr : true,
@@ -38,3 +15,27 @@ export default defineConfig({
   //   outDir: 'dist-v'
   // }
 });
+
+// vite.config.js
+// import { defineConfig } from "vite"
+
+// export default defineConfig(({ command, mode }) => {
+//   const isSSR = process.argv.includes("--ssr")
+//   console.log({command, mode, isSSR})
+//   // if (mode) {
+//   //   // Server build
+//   //   return {
+//   //     build: {
+//   //       ssr: "src/entry-server.js",
+//   //       outDir: "dist/server",
+//   //     },
+//   //   }
+//   // }
+
+//   // Client build
+//   return {
+//     build: {
+//       outDir: "dist/client",
+//     },
+//   }
+// })

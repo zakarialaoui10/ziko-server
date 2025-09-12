@@ -5,7 +5,7 @@ export default defineConfig({
   build: {
     manifest: true, 
     rollupOptions: {
-      input: path.resolve(__dirname, "src/entry-client.js"),
+      input: path.resolve(__dirname, "src/entries/entry-client.js"),
       output: {
         // Change the folder names for chunks & assets
         entryFileNames: `.client/[name].[hash].js`,
