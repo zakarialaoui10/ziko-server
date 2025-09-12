@@ -53,7 +53,7 @@ export async function createServer({ baseDir = process.cwd() } = {}) {
           "utf-8",
         );
         template = await vite.transformIndexHtml(url, template);
-        render = (await vite.ssrLoadModule("/src/entry-server.js")).default;
+        render = (await vite.ssrLoadModule("/src/entries/entry-server.js")).default;
       } else {
         template = templateHtml;
 

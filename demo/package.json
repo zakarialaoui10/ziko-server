@@ -8,8 +8,8 @@
         
         "build": "npm run build:client && npm run build:server",
         "build:client": "vite build --outDir dist/client",
-        "build:server": "vite build --ssr src/entry-server.js --outDir dist/server",
-        "preview": "cross-env NODE_ENV=production node src/server",
+        "build:server": "vite build --ssr src/entries/entry-server.js --outDir dist/server",
+        "preview": "cross-env NODE_ENV=production node src/entries/server",
 
         "build:ssg" : "npm run ssg:build-client && npm run ssg:prerender",
         "ssg:prerender": "node src/entries/prerender.js",
