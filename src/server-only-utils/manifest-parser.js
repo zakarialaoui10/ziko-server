@@ -1,4 +1,4 @@
-import {readFileSync} from 'fs';
+import {readFileSync, existsSync} from 'fs';
 import {join} from 'path';
 
 export class ManifestParser {
@@ -7,15 +7,16 @@ export class ManifestParser {
     }
     #init(relative_path){
         const file = join(process.cwd(), relative_path);
-        this.manifest = JSON.parse(readFileSync(file, 'utf-8'))
+        if (existsSync(file)) this.manifest = JSON.parse(readFileSync(file, "utf-8"));
+        else {
+            console.error(`Manifest file not found: ${file}`)
+            this.manifest = null
+        }
     }
     get EntryClientFile(){
         return this.manifest['src/entry-client.js'].file
     }
-    get files(){
-        return this.manifest
-    }
 }
 
 const manifest = new ManifestParser('./dist/client/.vite/manifest.json')
-console.log(manifest.EntryClientFile)
+console.log(manifest.files)
