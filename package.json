@@ -10,27 +10,8 @@
     "LICENCE"
   ],
   "exports": {
-    ".": {
-      "import": "./src/index.js"
-    },
-    "./pages": {
-      "import": "./src/pages.js"
-    },
-    "./server": {
-      "import": "./src/server.js"
-    },
-    "./entry-client": {
-      "import": "./src/entry-client.js"
-    },
-    "./entry-server": {
-      "import": "./src/entry-server.js"
-    },
-    "./utils": {
-      "import": "./src/utils/index.js"
-    },
-    "./server-only-utils": {
-      "import": "./src/server-only-utils/index.js"
-    }
+    ".": "./src/index.js",
+    "./*" : "./src/*/index.js"
   },
   "keywords": [
     "ziko",

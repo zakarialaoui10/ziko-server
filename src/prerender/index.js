@@ -1,9 +1,9 @@
-import { globImports } from "ziko-server/server-only-utils";
 import { 
+  globImports,
   renderToString,
   writeToDist,
   ManifestParser
- } from "ziko-server/server-only-utils";
+ } from "../server-only-utils";
 
 const StaticRoutesMap = {
     "/articles/id/:id":[

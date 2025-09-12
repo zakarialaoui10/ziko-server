@@ -3,9 +3,11 @@ import {
   routesMatcher,
   dynamicRoutesParser,
   isDynamic,
-} from "./utils/index.js";
-import { renderToString } from "./server-only-utils/renderToString.js";
-import { globImports } from "ziko-server/server-only-utils";
+} from "../utils/index.js";
+import { 
+  renderToString,
+  globImports
+ } from "../server-only-utils/index.js";
 
 export function EntryServer() {
   return async function render(path) {
