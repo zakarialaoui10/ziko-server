@@ -16,5 +16,5 @@ ${html}
     const filePath = join(outDir, route === '/' ? '' : route, 'index.html');
     await mkdir(dirname(filePath), { recursive: true });
     await writeFile(filePath, out, 'utf8');
-    console.log(`✔️ Saved ${route} → ${filePath}`);
+    console.log(`✔️  Saved ${route} → ${filePath}`);
 }
