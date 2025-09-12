@@ -1,7 +1,5 @@
-import {tags} from "ziko"
-// import {pages} from "virtual:generated-pages"
-// console.log({pages})
+import {tags, Random} from "ziko"
 const App = () =>{
-    return tags.h1("Index...").style({color : "red"}).onPtrDown(()=>alert("Click"))
+    return tags.h1("Index...").style({color : "red"}).onPtrDown(e=>e.target.style({color : Random.color()}))
 }
 export default App

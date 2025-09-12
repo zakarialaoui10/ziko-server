@@ -47,7 +47,7 @@ async function prerender() {
     const HTML = []
     const pages = await globImports("./src/pages/**/*{.js,.mdz}") 
     const StaticPags = await resolveStaticRoutes(pages, StaticRoutesMap)
-    const Manifest = new ManifestParser('./dist/client/.vite/manifest.json')
+    const Manifest = new ManifestParser('./dist/.vite/manifest.json')
 
     for(let route in StaticPags){
         const App = StaticPags[route];

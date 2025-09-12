@@ -10,13 +10,7 @@
         "build:server": "vite build --ssr src/entry-server.js --outDir dist/server",
         "preview": "cross-env NODE_ENV=production node src/server",
         "preview-static" : "vite preview",
-        "build-client-only" : "vite build --config vite.config.client.js",
-
-        "dev-v": "vite",
-        "build-v": "npm run build:client-v && npm run build:server-v",
-        "build:client-v": "vite build --outDir dist-v/client",
-        "build:server-v": "vite build --ssr src/entry-server.js --outDir dist-v/server",
-        "preview-v": "node dist-v/server/entry-server.js"
+        "build-client-only" : "vite build --config vite.config.client.js"
     },
     "dependencies": {
         "vite": "^6.0.7"

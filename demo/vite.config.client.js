@@ -1,14 +1,19 @@
-// vite.client.config.js
 import { defineConfig } from "vite";
 import path from "node:path";
 
 export default defineConfig({
   build: {
-    manifest: true, // <-- generate manifest.json
+    manifest: true, 
     rollupOptions: {
-      input: path.resolve(__dirname, "src/entry-client.js"), // only client entry
+      input: path.resolve(__dirname, "src/entry-client.js"),
+      output: {
+        // Change the folder names for chunks & assets
+        entryFileNames: `.client/[name].[hash].js`,
+        chunkFileNames: `.client/[name].[hash].js`,
+        assetFileNames: `.client/[name].[hash].[ext]`,
+      },
     },
-    outDir: "dist/client", // separate client output
+    outDir: "dist", 
     emptyOutDir: true,
   },
 });
