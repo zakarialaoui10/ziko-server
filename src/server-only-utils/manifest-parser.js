@@ -18,5 +18,5 @@ export class ManifestParser {
     }
 }
 
-const manifest = new ManifestParser('./dist/client/.vite/manifest.json')
-console.log(manifest.files)
+// const manifest = new ManifestParser('./dist/client/.vite/manifest.json')
+// console.log(manifest.files)

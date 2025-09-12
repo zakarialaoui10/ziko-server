@@ -1,7 +1,8 @@
 import { globImports } from "ziko-server/server-only-utils";
 import { 
   renderToString,
-  writeToDist
+  writeToDist,
+  ManifestParser
  } from "ziko-server/server-only-utils";
 
 const StaticRoutesMap = {
@@ -46,13 +47,14 @@ async function prerender() {
     const HTML = []
     const pages = await globImports("./src/pages/**/*{.js,.mdz}") 
     const StaticPags = await resolveStaticRoutes(pages, StaticRoutesMap)
+    const Manifest = new ManifestParser('./dist/client/.vite/manifest.json')
 
     for(let route in StaticPags){
         const App = StaticPags[route];
         const res = await App();
         const html = renderToString(res)
         HTML.push({route, html})
-        writeToDist({route, html})
+        writeToDist({route, html, entry_client_path : Manifest.EntryClientFile})
     }
     // console.log({HTML})
 

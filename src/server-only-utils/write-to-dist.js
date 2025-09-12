@@ -1,12 +1,12 @@
 import {mkdir, writeFile} from 'fs/promises';
 import {join, dirname} from 'path';
 
-export async function writeToDist({route, html, outDir = 'dist/static'}={}) {
+export async function writeToDist({route, html, outDir = 'dist/static', entry_client_path = ''}={}) {
     const out = `
 <!doctype html>
 <html>
 <head>
-    <script type="module" src="assets/entry-client-CidUuTlV.js"></script>
+    <script type="module" src="${entry_client_path}"></script>
 </head>
 <body>
 ${html}
