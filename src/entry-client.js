@@ -16,6 +16,7 @@ export function EntryClient({pages}={}){
       Object.assign(pairs, { [customPath(routes[i], root)]: component });
     }
     async function hydrate(path) {
+      if(path.endsWith("/")) path = path.slice(0, -1);
       let [mask, callback] = Object.entries(pairs).find(([route]) =>
         routesMatcher(route, `/${path}`),
       );

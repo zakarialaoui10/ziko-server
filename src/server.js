@@ -1,6 +1,6 @@
-import fs from "node:fs/promises";
+import {readFile} from "node:fs/promises";
 import express from "express";
-import path from "node:path";
+import {join} from "node:path";
 import { pathToFileURL } from "node:url";
 
 export async function createServer({ baseDir = process.cwd() } = {}) {
@@ -9,8 +9,8 @@ export async function createServer({ baseDir = process.cwd() } = {}) {
   const base = process.env.BASE || "/";
 
   // Cached production assets
-  const templateHtml = isProduction
-    ? await fs.readFile(path.join(baseDir, "./dist/client/index.html"), "utf-8")
+  const HTML_TEMPLATE = isProduction
+    ? await readFile(join(baseDir, "./dist/client/index.html"), "utf-8")
     : "";
 
   // Create http server
@@ -33,7 +33,7 @@ export async function createServer({ baseDir = process.cwd() } = {}) {
     app.use(compression());
     app.use(
       base,
-      sirv(path.join(baseDir, "./dist/client"), { extensions: [] }),
+      sirv(join(baseDir, "./dist/client"), { extensions: [] }),
     );
   }
 
@@ -48,18 +48,18 @@ export async function createServer({ baseDir = process.cwd() } = {}) {
       let render;
       if (!isProduction) {
         // Always read fresh template in development
-        template = await fs.readFile(
-          path.join(baseDir, "./index.html"),
+        template = await readFile(
+          join(baseDir, "./index.html"),
           "utf-8",
         );
         template = await vite.transformIndexHtml(url, template);
         render = (await vite.ssrLoadModule("/src/entries/entry-server.js")).default;
       } else {
-        template = templateHtml;
+        template = HTML_TEMPLATE;
 
         // Convert path to a file:// URL for ESM import
         const entryServerPath = pathToFileURL(
-          path.join(baseDir, "./dist/server/entry-server.js"),
+          join(baseDir, "./dist/server/entry-server.js"),
         ).href;
         render = (await import(/* @vite-ignore */entryServerPath)).default;
       }

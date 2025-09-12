@@ -4,7 +4,7 @@
     "version": "0.0.0",
     "type": "module",
     "scripts": {
-        "dev": "node src/server",
+        "dev": "node src/entries/server.js",
         
         "build": "npm run build:client && npm run build:server",
         "build:client": "vite build --outDir dist/client",

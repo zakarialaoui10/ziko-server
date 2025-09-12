@@ -9,6 +9,7 @@ import { globImports } from "ziko-server/server-only-utils";
 
 export function EntryServer() {
   return async function render(path) {
+    if(path.endsWith("/")) path = path.slice(0, -1);
 
     const pairs = await globImports("./src/pages/**/*{.js,.mdz}")
     let [mask, callback] = Object.entries(pairs).find(([route]) =>
