@@ -10,7 +10,7 @@
         "build:static": "cross-env TARGET=static vite build",
         "build:ssr": "npm run build:client && npm run build:server",
         "build:mixed" : "npm run build:ssr && npm run build:static",
-        "preview:ssr": "cross-env NODE_ENV=production node src/.entries/server",
+        "preview:ssr": "cross-env NODE_ENV=production node src/.entries/server.js",
         "preview:mixed": "vite preview --outDir dist"
 
     },

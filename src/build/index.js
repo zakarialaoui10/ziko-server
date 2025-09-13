@@ -15,7 +15,10 @@ export function build({outDir = 'dist'} = {}) {
                 emptyOutDir: true,
                 manifest: true,
                 rollupOptions: {
-                    input: resolve(process.cwd(), "src/.entries/entry-client.js"),
+                    input: {
+                        index: resolve(process.cwd(), "index.html"),
+                        client: resolve(process.cwd(), "src/.entries/entry-client.js")
+                    },
                     output: {
                         entryFileNames: `assets/[name].[hash].js`,
                         chunkFileNames: `assets/[name].[hash].js`,
@@ -37,12 +40,16 @@ export function build({outDir = 'dist'} = {}) {
     }
 
     if (isStatic) {
-        prerender({ outDir })
+        prerender({outDir : 'dist'})
         // .then(
         //     ()=> console.log("Static prerender completed!")
         // )
-        return {}; 
+        // return {}; 
     }
 
-    return {};
+    return {
+        build: {
+            emptyOutDir: false,
+        }
+    };
 }

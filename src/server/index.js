@@ -1,7 +1,7 @@
-import {readFile} from "node:fs/promises";
-import express from "express";
-import {join} from "node:path";
-import { pathToFileURL } from "node:url";
+import {readFile, stat} from 'node:fs/promises';
+import express from 'express';
+import { join } from 'node:path';
+import { pathToFileURL } from 'node:url';
 
 export async function createServer({ baseDir = process.cwd() } = {}) {
   const isProduction = process.env.NODE_ENV === "production";
@@ -9,7 +9,7 @@ export async function createServer({ baseDir = process.cwd() } = {}) {
   const base = process.env.BASE || "/";
 
   const HTML_TEMPLATE = isProduction
-    ? await readFile(join(baseDir, "./dist/client/index.html"), "utf-8")
+    ? await readFile(join(baseDir, "./dist/.client/index.html"), "utf-8")
     : "";
 
   const app = express();
@@ -29,7 +29,7 @@ export async function createServer({ baseDir = process.cwd() } = {}) {
     app.use(compression());
     app.use(
       base,
-      sirv(join(baseDir, "./dist/client"), { extensions: [] }),
+      sirv(join(baseDir, "./dist/.client"), { extensions: [] }),
     );
   }
 
@@ -37,7 +37,6 @@ export async function createServer({ baseDir = process.cwd() } = {}) {
   app.use("*", async (req, res) => {
     try {
       const url = req.originalUrl.replace(base, "");
-
       let template;
       let render;
       if (!isProduction) {
@@ -46,8 +45,26 @@ export async function createServer({ baseDir = process.cwd() } = {}) {
         render = (await vite.ssrLoadModule("/src/.entries/entry-server.js")).default;
       } 
       else {
+        const file_path = join(process.cwd(), 'dist', url, 'index.html');
+        // const file = await readFile(file_path);
+        console.log({
+          file_path, 
+          // file
+        })
+
+        // console.log({file_path})
+        try {
+          const in_static = await readFile(file_path);
+          console.log(in_static)
+          // console.log({is : in_static.isFile(), file_path})
+          if (in_static.isFile()) {
+          }
+        } catch (err) {
+           console.log('File does not exist');
+        }
+        
         template = HTML_TEMPLATE;
-        const entryServerPath = pathToFileURL(join(baseDir, "./dist/server/entry-server.js")).href;
+        const entryServerPath = pathToFileURL(join(baseDir, "./dist/.server/entry-server.js")).href;
         render = (await import(/* @vite-ignore */entryServerPath)).default;
       }
       const rendered = await render(url);
