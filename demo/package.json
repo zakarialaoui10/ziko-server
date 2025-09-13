@@ -11,7 +11,7 @@
         "build:ssr": "npm run build:client && npm run build:server",
         "build:mixed" : "npm run build:ssr && npm run build:static",
         "preview:ssr": "cross-env NODE_ENV=production node src/.entries/server.js",
-        "preview:mixed": "vite preview --outDir dist"
+        "preview:mixed": "vite preview"
 
     },
     "dependencies": {

@@ -1,4 +1,4 @@
-import {readFile, stat} from 'node:fs/promises';
+import {readFile} from 'node:fs/promises';
 import express from 'express';
 import { join } from 'node:path';
 import { pathToFileURL } from 'node:url';
@@ -9,7 +9,7 @@ export async function createServer({ baseDir = process.cwd() } = {}) {
   const base = process.env.BASE || "/";
 
   const HTML_TEMPLATE = isProduction
-    ? await readFile(join(baseDir, "./dist/.client/index.html"), "utf-8")
+    ? await readFile(join(baseDir, "./dist/index.html"), "utf-8") // To Fix
     : "";
 
   const app = express();
@@ -44,24 +44,20 @@ export async function createServer({ baseDir = process.cwd() } = {}) {
         template = await vite.transformIndexHtml(url, template);
         render = (await vite.ssrLoadModule("/src/.entries/entry-server.js")).default;
       } 
-      else {
-        const file_path = join(process.cwd(), 'dist', url, 'index.html');
-        // const file = await readFile(file_path);
-        console.log({
-          file_path, 
-          // file
-        })
+      else {        
+        // const file_path = join(process.cwd(), 'dist', url, 'index.html');
+        // const file_exist = existsSync(file_path)
+        // console.log({
+        //     file_path,
+        //     file_exist
+        //   })
 
-        // console.log({file_path})
-        try {
-          const in_static = await readFile(file_path);
-          console.log(in_static)
-          // console.log({is : in_static.isFile(), file_path})
-          if (in_static.isFile()) {
-          }
-        } catch (err) {
-           console.log('File does not exist');
-        }
+        // if(file_exist){
+        //   const file = readFileSync(file_path, 'utf-8')
+        //   // console.log({file})
+        //   // res.status(200).set({ "Content-Type": "text/html" }).send(file)
+        //   // res.sendFile(file_path);
+        // }
         
         template = HTML_TEMPLATE;
         const entryServerPath = pathToFileURL(join(baseDir, "./dist/.server/entry-server.js")).href;
