@@ -5,25 +5,13 @@
     "type": "module",
     "scripts": {
         "dev": "node src/entries/server.js",
-        
-        "build": "npm run build:client && npm run build:server",
-        "build:client": "vite build --outDir dist/client",
-        "build:server": "vite build --ssr src/entries/entry-server.js --outDir dist/server",
-        "preview": "cross-env NODE_ENV=production node src/entries/server",
-
-        "build:ssg" : "npm run ssg:build-client && npm run ssg:prerender",
-        "ssg:prerender": "node src/entries/prerender.js",
-        "ssg:build-client" : "vite build --config vite.config.client.js",
-        "preview:ssg" : "vite preview",
-
-        "build-exp:client": "cross-env TARGET=client vite build --config config/vite.config.js",
-        "build-exp:server": "cross-env TARGET=server vite build --config config/vite.config.js",
-        "build-exp:static": "node src/entries/prerender",
-        "build-exp:ssr": "npm run build-exp:client && npm run build-exp:server",
-        "build-exp:mixed" : "npm run build-exp:ssr && npm run build-exp:static",
-        "preview-exp:ssr": "cross-env NODE_ENV=production node src/entries/server",
-        "preview-exp:mixed": "vite preview --outDir dist"
-
+        "build:client": "cross-env TARGET=client vite build --config vite.config.js",
+        "build:server": "cross-env TARGET=server vite build --config vite.config.js",
+        "build:static": "node src/entries/prerender",
+        "build:ssr": "npm run build:client && npm run build:server",
+        "build:mixed" : "npm run build:ssr && npm run build:static",
+        "preview:ssr": "cross-env NODE_ENV=production node src/entries/server",
+        "preview:static": "vite preview"
     },
     "dependencies": {
         "vite": "^6.0.7"

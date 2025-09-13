@@ -33,4 +33,5 @@ export function build({outDir = 'dist'} = {}){
             }
         }        
     }
+    return {}
 }

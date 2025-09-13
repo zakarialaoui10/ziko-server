@@ -26,7 +26,10 @@ export function EntryClient({pages}={}){
         UIElement = await callback.call(this, params);
       } 
       else UIElement = await callback();
-      document.body.replaceWith(UIElement.element);  // To Fix ( replace intercative elements only )
+      document.body.innerHTML = ""
+      document.body.append(UIElement.element)
+      // document.body.replaceWith(UIElement.element);
+      // To Fix ( replace intercative elements only )
     }
     hydrate(location.pathname.slice(1));
   }))
