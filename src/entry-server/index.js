@@ -28,15 +28,6 @@ export function EntryServer() {
 
     const html = renderToString(UIElement);
 
-    // console.log({html})
-
-    // const OutDirPath = `dist2${mask}`
-    // console.log({OutDirPath})
-    // const FilePath = join(OutDirPath, 'index.html');
-    // const htmlContent = `<!DOCTYPE html><html><body><h1>${html}</h1></body></html>`;
-    // fs.mkdir(OutDirPath,{recursive : true})
-    // fs.writeFile(FilePath, htmlContent, 'utf8');
-
 
     return {
       // head,
