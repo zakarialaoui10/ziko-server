@@ -37,8 +37,9 @@ export function build({outDir = 'dist'} = {}) {
     }
 
     if (isStatic) {
-        prerender({ outDir });
-        // console.log("Static prerender completed!");
+        prerender({ outDir }).then(
+            ()=> console.log("Static prerender completed!")
+        )
         return {}; 
     }
 
