@@ -43,7 +43,7 @@ export async function createServer({ baseDir = process.cwd() } = {}) {
       if (!isProduction) {
         template = await readFile(join(baseDir, "./index.html"), "utf-8");
         template = await vite.transformIndexHtml(url, template);
-        render = (await vite.ssrLoadModule("/src/entries/entry-server.js")).default;
+        render = (await vite.ssrLoadModule("/src/.entries/entry-server.js")).default;
       } 
       else {
         template = HTML_TEMPLATE;
