@@ -1,4 +1,4 @@
-  const templateHtml =`
+  const HTML_TEMPLATE =`
   <!doctype html>
     <html>
         <head>
@@ -11,4 +11,4 @@
     </html>
 `.trim()
 
-export default templateHtml;
+export default HTML_TEMPLATE;

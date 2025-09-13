@@ -14,8 +14,16 @@
         "build:ssg" : "npm run ssg:build-client && npm run ssg:prerender",
         "ssg:prerender": "node src/entries/prerender.js",
         "ssg:build-client" : "vite build --config vite.config.client.js",
-        "preview:ssg" : "vite preview"
-        
+        "preview:ssg" : "vite preview",
+
+        "build-exp:client": "cross-env TARGET=client vite build --config config/vite.config.js",
+        "build-exp:server": "cross-env TARGET=server vite build --config config/vite.config.js",
+        "build-exp:static": "cross-env TARGET=static vite build --config config/vite.config.js",
+        "build-exp:ssr": "npm run build-exp:client && npm run build-exp:server",
+        "build-exp:mixed" : "npm run build-exp:ssr && npm run build-exp:static",
+        "preview-exp:ssr": "cross-env NODE_ENV=production node src/entries/server",
+        "preview-exp:mixed": "vite preview --outDir dist"
+
     },
     "dependencies": {
         "vite": "^6.0.7"
