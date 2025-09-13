@@ -1,7 +1,7 @@
-import {readFile} from 'node:fs/promises';
-import express from 'express';
-import { join } from 'node:path';
-import { pathToFileURL } from 'node:url';
+import {readFile} from "node:fs/promises";
+import express from "express";
+import {join} from "node:path";
+import { pathToFileURL } from "node:url";
 
 export async function createServer({ baseDir = process.cwd() } = {}) {
   const isProduction = process.env.NODE_ENV === "production";
@@ -9,7 +9,7 @@ export async function createServer({ baseDir = process.cwd() } = {}) {
   const base = process.env.BASE || "/";
 
   const HTML_TEMPLATE = isProduction
-    ? await readFile(join(baseDir, "./dist/index.html"), "utf-8") // To Fix
+    ? await readFile(join(baseDir, "./dist/.client/index.html"), "utf-8")
     : "";
 
   const app = express();
@@ -37,28 +37,15 @@ export async function createServer({ baseDir = process.cwd() } = {}) {
   app.use("*", async (req, res) => {
     try {
       const url = req.originalUrl.replace(base, "");
+
       let template;
       let render;
       if (!isProduction) {
         template = await readFile(join(baseDir, "./index.html"), "utf-8");
         template = await vite.transformIndexHtml(url, template);
-        render = (await vite.ssrLoadModule("/src/.entries/entry-server.js")).default;
+        render = (await vite.ssrLoadModule("/src/entries/entry-server.js")).default;
       } 
-      else {        
-        // const file_path = join(process.cwd(), 'dist', url, 'index.html');
-        // const file_exist = existsSync(file_path)
-        // console.log({
-        //     file_path,
-        //     file_exist
-        //   })
-
-        // if(file_exist){
-        //   const file = readFileSync(file_path, 'utf-8')
-        //   // console.log({file})
-        //   // res.status(200).set({ "Content-Type": "text/html" }).send(file)
-        //   // res.sendFile(file_path);
-        // }
-        
+      else {
         template = HTML_TEMPLATE;
         const entryServerPath = pathToFileURL(join(baseDir, "./dist/.server/entry-server.js")).href;
         render = (await import(/* @vite-ignore */entryServerPath)).default;

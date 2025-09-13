@@ -14,7 +14,7 @@ export class ManifestParser {
         }
     }
     get EntryClientFile(){
-        return this.manifest['src/.entries/entry-client.js'].file
+        return this.manifest['src/entries/entry-client.js'].file
     }
 }
 
