@@ -5,7 +5,13 @@ import {
     isDynamic,
   } from "../utils/index.js";
 export function EntryClient({pages}={}){
-  pages = import.meta.glob("/src/pages/**/*{.js,.mdz}")
+  if(import.meta.env.DEV) pages = import.meta.glob("/src/pages/**/*{.js,.mdz}")
+  else pages = Object({
+    '/src/pages/index.js' : ()=>import('/src/pages/index.js'),
+    // '/src/pages/me.js' : ()=>import('/src/pages/me.js'),
+    '/src/pages/about/index.js' : ()=>import('/src/pages/about/index.js')
+  })
+  // console.log(pages)
   addEventListener("load", (async () => {
     const routes = Object.keys(pages);
     const root = "./pages/";
@@ -20,6 +26,11 @@ export function EntryClient({pages}={}){
       let [mask, callback] = Object.entries(pairs).find(([route]) =>
         routesMatcher(route, `/${path}`),
       );
+      console.log({
+        path,
+        mask,
+        callback
+      })
       let UIElement;
       if (isDynamic(mask)) {
         const params = dynamicRoutesParser(mask, `/${path}`);
