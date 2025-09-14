@@ -4,15 +4,16 @@ import {
     dynamicRoutesParser,
     isDynamic,
   } from "../utils/index.js";
-export function EntryClient({pages}={}){
+export function EntryClient({base = '', pages}={}){
   if(import.meta.env.DEV) pages = import.meta.glob("/src/pages/**/*{.js,.mdz}")
-  else pages = Object({
-    '/src/pages/index.js' : ()=>import('/src/pages/index.js'),
-    // '/src/pages/me.js' : ()=>import('/src/pages/me.js'),
-    '/src/pages/about/index.js' : ()=>import('/src/pages/about/index.js')
-  })
-  // console.log(pages)
+  // else pages = Object({
+  //   '/src/pages/index.js' : ()=>import('/src/pages/index.js'),
+  //   // '/src/pages/me.js' : ()=>import('/src/pages/me.js'),
+  //   '/src/pages/about/index.js' : ()=>import('/src/pages/about/index.js')
+  // })
   addEventListener("load", (async () => {
+    if(import.meta.env.PROD) pages = (await import(/* @vite-ignore */`${base}/.generated-routes.js`)).pages
+    console.log(pages)
     const routes = Object.keys(pages);
     const root = "./pages/";
     const pairs = {};
