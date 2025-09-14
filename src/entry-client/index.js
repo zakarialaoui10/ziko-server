@@ -7,7 +7,8 @@ import {
 export function EntryClient({base = '', pages}={}){
   if(import.meta.env.DEV) pages = import.meta.glob("/src/pages/**/*{.js,.mdz}")
   addEventListener("load", (async () => {
-    if(import.meta.env.PROD) pages = (await import(/* @vite-ignore */`${base}/.generated-routes.js`)).pages
+      pages = import.meta.glob("/src/pages/**/*{.js,.mdz}")
+    // if(import.meta.env.PROD) pages = (await import(/* @vite-ignore */`${base}/.generated-routes.js`)).pages
     const routes = Object.keys(pages);
     const root = "./pages/";
     const pairs = {};
