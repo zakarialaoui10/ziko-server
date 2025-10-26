@@ -14,6 +14,9 @@ Server-side rendering for Zikojs with file-based routing and client-side hydrati
 - ✅ Supports Dynamic Routes
 - ✅ Supports both Sync And Async rendering
 
+<!-- 
+compare with type
+ -->
 
 # Project Structure
 ```
