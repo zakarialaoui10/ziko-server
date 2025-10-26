@@ -17,14 +17,15 @@ export function EntryServer() {
     let [mask, callback] = Object.entries(pairs).find(([route]) =>
       routesMatcher(route, `/${path}`),
     );
-    // console.log({mask, callback})
+    // console.log({pairs})
+    console.log({mask, callback})
 
     let UIElement;
     if (isDynamic(mask)) {
       const params = dynamicRoutesParser(mask, `/${path}`);
-      UIElement = await callback.call(this, params);
+      UIElement = await callback.handler.call(this, params);
     } 
-    else UIElement = await callback();
+    else UIElement = await callback.handler();
 
     const html = renderToString(UIElement);
 

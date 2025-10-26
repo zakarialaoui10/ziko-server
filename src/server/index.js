@@ -1,26 +1,19 @@
 import {readFile} from "node:fs/promises";
-import { existsSync } from "node:fs";
+// import { existsSync } from "node:fs";
 import express from "express";
 import {join} from "node:path";
 import { pathToFileURL } from "node:url";
 
-export async function createServer({ baseDir = process.cwd() } = {}) {
+import { dev_server } from "./dev-server.js";
+
+export async function createServer({ baseDir = process.cwd(), port = process.env.PORT || 5173 } = {}){
   const isProduction = process.env.NODE_ENV === "production";
-  const port = process.env.PORT || 5173;
   const base = process.env.BASE || "/";
   const HTML_TEMPLATE = isProduction ? await readFile(join(baseDir, "./dist/.client/index.html"), "utf-8") : "";
   const app = express();
 
   let vite;
-  if (!isProduction) {
-    const { createServer } = await import("vite");
-    vite = await createServer({
-      server: { middlewareMode: true },
-      appType: "custom",
-      base,
-    });
-    app.use(vite.middlewares);
-  } 
+  if (!isProduction) vite = await dev_server(app, base)
   else {
     const compression = (await import("compression")).default;
     const sirv = (await import("sirv")).default;
@@ -35,11 +28,15 @@ export async function createServer({ baseDir = process.cwd() } = {}) {
   app.use("*", async (req, res) => {
     try {
       const url = req.originalUrl.replace(base, "");
-
+      /* Test */
+      if(url === 'json') {
+        return res.json({a:1})
+      }
+      // console.log({url})
+      /////////////////////
       let template;
       let render;
       if (!isProduction) {
-
         template = await readFile(join(baseDir, "./index.html"), "utf-8");
         template = await vite.transformIndexHtml(url, template);
         render = (await vite.ssrLoadModule("/src/.ziko/entry-server.js")).default;
@@ -51,11 +48,13 @@ export async function createServer({ baseDir = process.cwd() } = {}) {
         //   res.sendFile(file_path)
         // } 
         template = HTML_TEMPLATE;
-        const entryServerPath = pathToFileURL(join(baseDir, "./dist/.server/entry-server.js")).href;
-        render = (await import(/* @vite-ignore */entryServerPath)).default;
+        const ENTRY_SERVER_PATH = pathToFileURL(join(baseDir, "./dist/.server/entry-server.js")).href;
+        render = (await import(/* @vite-ignore */ENTRY_SERVER_PATH)).default;
       }
       const rendered = await render(url);
       const page = await rendered(url);
+      // console.log({page, rendered, url, render})
+
       const html = template
         .replace(`<!--app-head-->`, page.head ?? "")
         .replace(`<!--app-html-->`, page.html ?? "");

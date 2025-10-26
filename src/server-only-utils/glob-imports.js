@@ -5,6 +5,7 @@ import { customPath } from '../utils/custom-path.js';
 
 export async function globImports(pattern = './src/pages/**/*.{js,ts,jsx,tsx,mdz}', { cwd = process.cwd() , root = "./pages/"} = {}) {
   const files = await fg(pattern, { cwd });
+  // console.log({files})
   const modules = {};
 
   for (const file of files) {
@@ -15,12 +16,29 @@ export async function globImports(pattern = './src/pages/**/*.{js,ts,jsx,tsx,mdz
   }
 
   const routes = Object.keys(modules);
+
+  console.log('from server-only-utils/glob-imports')
+  
+
   
   const pairs = {};
   for (let i = 0; i < routes.length; i++) {
       const module = await modules[routes[i]]();
-      const component = await module.default;
-      Object.assign(pairs, { [customPath(routes[i], root)]: component });
+      let isComponent = true;
+      if(routes[i].includes('.json')){
+        isComponent = false;
+        routes[i] = routes[i].replace('.json', '')
+      }
+      const handler = await module.default;
+      Object.assign(pairs, { 
+        [customPath(routes[i], root)]: {
+          handler,
+          prerender : false,
+          hydration : false,
+          isComponent,
+        } });
   }  
+
+  // console.log({modules, routes, pairs})
   return pairs
 }
