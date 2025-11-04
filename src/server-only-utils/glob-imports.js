@@ -17,7 +17,7 @@ export async function globImports(pattern = './src/pages/**/*.{js,ts,jsx,tsx,mdz
 
   const routes = Object.keys(modules);
 
-  console.log('from server-only-utils/glob-imports')
+  // console.log('from server-only-utils/glob-imports')
   
 
   

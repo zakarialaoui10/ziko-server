@@ -1,6 +1,6 @@
 import {
   customPath,
-  routesMatcher,
+  // routesMatcher,
   dynamicRoutesParser,
   isDynamic,
 } from "../utils/index.js";
@@ -8,6 +8,8 @@ import {
   renderToString,
   globImports
  } from "../server-only-utils/index.js";
+
+ import { routesMatcher } from "../utils/routes-matcher-exp.js";
 
 export function EntryServer() {
   return async function render(path) {
@@ -17,8 +19,8 @@ export function EntryServer() {
     let [mask, callback] = Object.entries(pairs).find(([route]) =>
       routesMatcher(route, `/${path}`),
     );
-    // console.log({pairs})
-    console.log({mask, callback})
+    console.log({pairs})
+    // console.log({mask, callback})
 
     let UIElement;
     if (isDynamic(mask)) {
