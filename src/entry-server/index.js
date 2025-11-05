@@ -9,7 +9,11 @@ import {
   globImports
  } from "../server-only-utils/index.js";
 
- import { routesMatcher } from "../utils/routes-matcher-exp.js";
+ import { 
+  routesMatcher,
+  dynamicRoutesParser,
+  isDynamic
+ } from "../utils/routes-matcher-exp.js";
 
 export function EntryServer() {
   return async function render(path) {
@@ -25,6 +29,7 @@ export function EntryServer() {
     let UIElement;
     if (isDynamic(mask)) {
       const params = dynamicRoutesParser(mask, `/${path}`);
+      console.log({params})
       UIElement = await callback.handler.call(this, params);
     } 
     else UIElement = await callback.handler();
