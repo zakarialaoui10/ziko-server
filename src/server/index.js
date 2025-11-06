@@ -3,8 +3,8 @@ import {readFile} from "node:fs/promises";
 import express from "express";
 import {join} from "node:path";
 import { pathToFileURL } from "node:url";
-
 import { dev_server } from "./dev-server.js";
+import { API_HANDLER } from "./api-handler.js";
 
 export async function createServer({ baseDir = process.cwd(), port = process.env.PORT || 5173 } = {}){
   const isProduction = process.env.NODE_ENV === "production";
@@ -25,15 +25,10 @@ export async function createServer({ baseDir = process.cwd(), port = process.env
   }
 
   // Serve HTML
+  // app.use(express.static('public'))
   app.use("*", async (req, res) => {
     try {
       const url = req.originalUrl.replace(base, "");
-      /* Test */
-      if(url === 'json') {
-        return res.json({a:1})
-      }
-      // console.log({url})
-      /////////////////////
       let template;
       let render;
       if (!isProduction) {
@@ -53,8 +48,12 @@ export async function createServer({ baseDir = process.cwd(), port = process.env
       }
       const rendered = await render(url);
       const page = await rendered(url);
-      // console.log({page, rendered, url, render})
-
+      if(page.GET) return await API_HANDLER(page.GET, req, res)
+      if(page.POST) return await API_HANDLER(page.POST, req, res)
+      if(page.PUT) return await API_HANDLER(page.PUT, req, res)
+      if(page.DELETE) return await API_HANDLER(page.DELETE, req, res)
+      if(page.PATCH) return await API_HANDLER(page.PATCH, req, res)
+        
       const html = template
         .replace(`<!--app-head-->`, page.head ?? "")
         .replace(`<!--app-html-->`, page.html ?? "");
@@ -73,3 +72,5 @@ export async function createServer({ baseDir = process.cwd(), port = process.env
 
   return app;
 }
+
+

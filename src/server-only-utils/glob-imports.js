@@ -23,11 +23,6 @@ export async function globImports(pattern = './src/pages/**/*.{js,ts,jsx,tsx,mdz
   const pairs = {};
   for (let i = 0; i < routes.length; i++) {
       const module = await modules[routes[i]]();
-      let isComponent = true;
-      if(routes[i].includes('.json')){
-        isComponent = false;
-        routes[i] = routes[i].replace('.json', '')
-      }
       const {
         default : Component,
         head,
@@ -37,13 +32,11 @@ export async function globImports(pattern = './src/pages/**/*.{js,ts,jsx,tsx,mdz
         DELETE,
         PATCH
       } = await module
-      // console.log({GET, POST, DELETE, PUT})
-      // const handler = await module.default;
+
       Object.assign(pairs, { 
         [customPath(routes[i], root)]: {
           prerender : false,
           hydration : false,
-          isComponent,
           Component,
           head,
           GET,
