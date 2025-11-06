@@ -149,38 +149,38 @@ function isDynamic(path) {
 
 export { routesMatcher, dynamicRoutesParser, isDynamic };
 
-// DEMO
-console.log("=== EXISTING TESTS ===");
-console.log(routesMatcher("/user/[id]+", "/user")); // true
-console.log(routesMatcher("/user/[id]+", "/user/42")); // true
-console.log(routesMatcher("/blog/[...slug]", "/blog/a/b")); // true
-console.log(routesMatcher("/blog/[id]", "/blog")); // false
-console.log(routesMatcher("/product/:id", "/product/99")); // true
+// // DEMO
+// console.log("=== EXISTING TESTS ===");
+// console.log(routesMatcher("/user/[id]+", "/user")); // true
+// console.log(routesMatcher("/user/[id]+", "/user/42")); // true
+// console.log(routesMatcher("/blog/[...slug]", "/blog/a/b")); // true
+// console.log(routesMatcher("/blog/[id]", "/blog")); // false
+// console.log(routesMatcher("/product/:id", "/product/99")); // true
 
-console.log("\n=== PARSER TESTS ===");
-console.log(dynamicRoutesParser("/user/[id]+", "/user"));
-// 👉 {}
+// console.log("\n=== PARSER TESTS ===");
+// console.log(dynamicRoutesParser("/user/[id]+", "/user"));
+// // 👉 {}
 
-console.log(dynamicRoutesParser("/user/[id]+", "/user/42"));
-// 👉 { id: "42" }
+// console.log(dynamicRoutesParser("/user/[id]+", "/user/42"));
+// // 👉 { id: "42" }
 
-console.log(dynamicRoutesParser("/blog/[...slug]", "/blog/2025/oct/post"));
-// 👉 { slug: "2025/oct/post" }
+// console.log(dynamicRoutesParser("/blog/[...slug]", "/blog/2025/oct/post"));
+// // 👉 { slug: "2025/oct/post" }
 
-console.log(
-  dynamicRoutesParser("/product/[category]/[id]+", "/product/electronics"),
-);
-// 👉 { category: "electronics" }
+// console.log(
+//   dynamicRoutesParser("/product/[category]/[id]+", "/product/electronics"),
+// );
+// // 👉 { category: "electronics" }
 
-console.log("\n=== FIX TEST ===");
-console.log(dynamicRoutesParser("/[...slug]/[id]", "/sl1/sl2/9"));
-// 👉 { slug: "sl1/sl2", id: "9" }
+// console.log("\n=== FIX TEST ===");
+// console.log(dynamicRoutesParser("/[...slug]/[id]", "/sl1/sl2/9"));
+// // 👉 { slug: "sl1/sl2", id: "9" }
 
-console.log(dynamicRoutesParser("/[slug]/[...id]", "/sl1/id1/id2"));
-// 👉 { slug: "sl1", id: "id1/id2" }
+// console.log(dynamicRoutesParser("/[slug]/[...id]", "/sl1/id1/id2"));
+// // 👉 { slug: "sl1", id: "id1/id2" }
 
-console.log(dynamicRoutesParser("/blog/lang/[lang]/id/[id]", "/blog/lang/en/id/10"));
-// 👉 { lang: "en", id: "10" }
+// console.log(dynamicRoutesParser("/blog/lang/[lang]/id/[id]", "/blog/lang/en/id/10"));
+// // 👉 { lang: "en", id: "10" }
 
 
-// Only the last one that can be optional 
+// // Only the last one that can be optional 

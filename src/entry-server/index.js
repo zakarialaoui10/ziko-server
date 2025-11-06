@@ -1,5 +1,5 @@
 import {
-  customPath,
+  // customPath,
   // routesMatcher,
   dynamicRoutesParser,
   isDynamic,
@@ -20,26 +20,29 @@ export function EntryServer() {
     if(path.endsWith("/")) path = path.slice(0, -1);
 
     const pairs = await globImports("./src/pages/**/*{.js,.mdz}")
-    let [mask, callback] = Object.entries(pairs).find(([route]) =>
+    let [mask, module] = Object.entries(pairs).find(([route]) =>
       routesMatcher(route, `/${path}`),
     );
-    console.log({pairs})
-    // console.log({mask, callback})
-
-    let UIElement;
+    // console.log({module})
+    let UIElement, html, params;
     if (isDynamic(mask)) {
-      const params = dynamicRoutesParser(mask, `/${path}`);
-      console.log({params})
-      UIElement = await callback.handler.call(this, params);
+      params = dynamicRoutesParser(mask, `/${path}`);
+      UIElement = await module.handler.call(this, params);
     } 
-    else UIElement = await callback.handler();
+    const {Component, GET, POST, DELETE, UPDATE, head} = await module
 
-    const html = renderToString(UIElement);
-
+    if(Component){
+      UIElement = params ? await module.Component.call(this, params) : await module.Component();
+      html = renderToString(UIElement);
+    }
 
     return {
-      // head,
+      head,
       html,
+      GET,
+      POST,
+      DELETE,
+      UPDATE
     };
   };
 }

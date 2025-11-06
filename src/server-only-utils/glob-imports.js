@@ -5,7 +5,6 @@ import { customPath } from '../utils/custom-path.js';
 
 export async function globImports(pattern = './src/pages/**/*.{js,ts,jsx,tsx,mdz}', { cwd = process.cwd() , root = "./pages/"} = {}) {
   const files = await fg(pattern, { cwd });
-  // console.log({files})
   const modules = {};
 
   for (const file of files) {
@@ -29,13 +28,29 @@ export async function globImports(pattern = './src/pages/**/*.{js,ts,jsx,tsx,mdz
         isComponent = false;
         routes[i] = routes[i].replace('.json', '')
       }
-      const handler = await module.default;
+      const {
+        default : Component,
+        head,
+        GET, 
+        POST, 
+        PUT, 
+        DELETE,
+        PATCH
+      } = await module
+      // console.log({GET, POST, DELETE, PUT})
+      // const handler = await module.default;
       Object.assign(pairs, { 
         [customPath(routes[i], root)]: {
-          handler,
           prerender : false,
           hydration : false,
           isComponent,
+          Component,
+          head,
+          GET,
+          POST,
+          PUT,
+          DELETE,
+          PATCH,
         } });
   }  
 
