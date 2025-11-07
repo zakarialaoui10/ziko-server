@@ -22,6 +22,7 @@ export async function globImports(pattern = './src/pages/**/*.{js,ts,jsx,tsx,mdz
       const {
         default : Component,
         head,
+        prerender,
         GET, 
         POST, 
         PUT, 
@@ -33,6 +34,7 @@ export async function globImports(pattern = './src/pages/**/*.{js,ts,jsx,tsx,mdz
         [customPath(routes[i], root)]: {
           ...(Component && {Component}),
           ...(head && {head}),
+          ...(prerender !== undefined && {prerender}),
           ...(GET && {GET}),
           ...(POST && {POST}),
           ...(PUT && {PUT}),

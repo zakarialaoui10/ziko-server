@@ -2,8 +2,8 @@ export async function resolveStaticRoutes(routes, StaticRoutesMap) {
   const result = {};
 
   for (const [routePattern, handler] of Object.entries(routes)) {
-    const { Component } = handler;
-    if(!Component) continue;
+    const { Component, prerender } = handler;
+    if(!Component || prerender === false) continue;
     console.log({ Component })
 
     const staticParamsList = StaticRoutesMap[routePattern];

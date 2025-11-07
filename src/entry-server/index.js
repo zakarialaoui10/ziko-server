@@ -24,7 +24,7 @@ export function EntryServer() {
     );
     let UIElement, html, params;
     if (isDynamic(mask)) params = dynamicRoutesParser(mask, `/${path}`);
-    const {Component, GET, POST, DELETE, UPDATE, head} = await module
+    const {Component, GET, POST, DELETE, UPDATE, head, prerender} = await module
     if(Component){
       UIElement = params ? await Component.call(this, params) : await Component();
       html = renderToString(UIElement);
@@ -33,6 +33,7 @@ export function EntryServer() {
     return {
       head,
       html,
+      prerender,
       GET,
       POST,
       DELETE,
