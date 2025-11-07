@@ -6,7 +6,7 @@
 // } from "../utils/index.js";
 import { 
   renderToString,
-  globImports
+  globImports, 
  } from "../server-only-utils/index.js";
 
  import { 
@@ -18,7 +18,6 @@ import {
 export function EntryServer() {
   return async function render(path) {
     if(path.endsWith("/")) path = path.slice(0, -1);
-
     const pairs = await globImports("./src/pages/**/*{.js,.mdz}")
     let [mask, module] = Object.entries(pairs).find(([route]) =>
       routesMatcher(route, `/${path}`),
@@ -37,7 +36,7 @@ export function EntryServer() {
       GET,
       POST,
       DELETE,
-      UPDATE
+      UPDATE,
     };
   };
 }

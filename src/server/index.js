@@ -5,12 +5,18 @@ import {join} from "node:path";
 import { pathToFileURL } from "node:url";
 import { dev_server } from "./dev-server.js";
 import { API_HANDLER } from "./api-handler.js";
+import { importMiddlewares } from '../server-only-utils/import-middlwares.js'
 
 export async function createServer({ baseDir = process.cwd(), port = process.env.PORT || 5173 } = {}){
   const isProduction = process.env.NODE_ENV === "production";
   const base = process.env.BASE || "/";
   const HTML_TEMPLATE = isProduction ? await readFile(join(baseDir, "./dist/.client/index.html"), "utf-8") : "";
   const app = express();
+
+  const Middlewares = await importMiddlewares()
+  console.log({Middlewares})
+
+  // app.use(Middlewares.logger)
 
   let vite;
   if (!isProduction) vite = await dev_server(app, base)
