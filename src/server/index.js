@@ -34,7 +34,7 @@ export async function createServer({ baseDir = process.cwd(), port = process.env
       if (!isProduction) {
         template = await readFile(join(baseDir, "./index.html"), "utf-8");
         template = await vite.transformIndexHtml(url, template);
-        render = (await vite.ssrLoadModule("/src/.ziko/entry-server.js")).default;
+        render = (await vite.ssrLoadModule("/.ziko/entry-server.js")).default;
       } 
       else {
         // const file_path = join(process.cwd(), 'dist', url, 'index.html')

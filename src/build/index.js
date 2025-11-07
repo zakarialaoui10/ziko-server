@@ -12,7 +12,7 @@ export function build({outDir = 'dist'} = {}){
                 manifest: true, 
                 rollupOptions: {
                     input: {
-                     main :  resolve(process.cwd(), "src/.ziko/entry-client.js"),
+                     main :  resolve(process.cwd(), ".ziko/entry-client.js"),
                      index : resolve(process.cwd(), 'index.html')
                     },
                     output: {
@@ -28,7 +28,7 @@ export function build({outDir = 'dist'} = {}){
         return {
             build : {
                 outDir : `${outDir}/.server`,
-                ssr :  resolve(process.cwd(), "src/.ziko/entry-server.js"),
+                ssr :  resolve(process.cwd(), ".ziko/entry-server.js"),
                 copyPublicDir: false,
             }
         }        

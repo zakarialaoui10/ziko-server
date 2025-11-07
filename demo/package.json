@@ -4,14 +4,14 @@
     "version": "0.0.0",
     "type": "module",
     "scripts": {
-        "generate:routes": "node src/.ziko/generate-routes.js",
-        "dev": "node src/.ziko/server.js",
+        "generate:routes": "node .ziko/generate-routes.js",
+        "dev": "node .ziko/server.js",
         "build:client": "cross-env TARGET=client vite build --config vite.config.js",
         "build:server": "cross-env TARGET=server vite build --config vite.config.js",
-        "build:static": "node src/.ziko/prerender",
+        "build:static": "node .ziko/prerender",
         "build:ssr": "npm run build:client && npm run build:server",
         "build:mixed" : "npm run build:ssr && npm run build:static",
-        "preview:ssr": "cross-env NODE_ENV=production node src/.ziko/server",
+        "preview:ssr": "cross-env NODE_ENV=production node .ziko/server",
         "preview:static": "vite preview"
     },
     "dependencies": {

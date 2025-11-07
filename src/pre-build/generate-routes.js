@@ -10,7 +10,7 @@ const __pages__ = {
 export function generate_routes(){
     const Pages = stringify(__pages__);
     const Output = `export const pages = ${Pages}`
-    const path = join(process.cwd(), './src/.ziko/.generated-routes.js')
+    const path = join(process.cwd(), './.ziko/.generated-routes.js')
     writeFileSync(path, Output)
 }
 
