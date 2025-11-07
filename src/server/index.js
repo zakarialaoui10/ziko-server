@@ -1,7 +1,7 @@
 import {readFile} from "node:fs/promises";
 // import { existsSync } from "node:fs";
 import express from "express";
-import {join} from "node:path";
+import path, {join} from "node:path";
 import { pathToFileURL } from "node:url";
 import { dev_server } from "./dev-server.js";
 import { API_HANDLER } from "./api-handler.js";
@@ -31,7 +31,11 @@ export async function createServer({ baseDir = process.cwd(), port = process.env
   }
 
   // Serve HTML
+  app.use('/.client', express.static(path.join(process.cwd(), 'dist/.client')))
   // app.use(express.static('public'))
+  app.get('/', (req, res)=>{
+    res.sendFile(path.join(process.cwd(), 'dist/index.html'))
+  })
   app.use("*", async (req, res) => {
     try {
       const url = req.originalUrl.replace(base, "");

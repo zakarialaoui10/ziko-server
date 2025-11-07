@@ -2,7 +2,7 @@ import {mkdir, writeFile} from 'fs/promises';
 import {join, dirname} from 'path';
 
 export async function writeToDist({route, html, outDir = 'dist', entry_client_path = ''}={}) {
-    entry_client_path = `.client/${entry_client_path}`
+    entry_client_path = `/.client/${entry_client_path}`
     const out = `
 <!doctype html>
 <html>
