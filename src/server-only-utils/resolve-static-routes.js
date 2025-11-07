@@ -4,7 +4,7 @@ export async function resolveStaticRoutes(routes, StaticRoutesMap) {
   for (const [routePattern, handler] of Object.entries(routes)) {
     const { Component, prerender } = handler;
     if(!Component || prerender === false) continue;
-    console.log({ Component })
+    // console.log({ Component })
 
     const staticParamsList = StaticRoutesMap[routePattern];
 
@@ -22,11 +22,11 @@ export async function resolveStaticRoutes(routes, StaticRoutesMap) {
           return encodeURIComponent(params[key]);
         });
 
-        result[resolvedRoute] = () => handler(params);
+        result[resolvedRoute] = () => Component(params);
       }
     } else {
       // Static route, no params to expand
-      result[routePattern] = handler;
+      result[routePattern] = Component;
     }
   }
 

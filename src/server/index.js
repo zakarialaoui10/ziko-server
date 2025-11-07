@@ -6,6 +6,8 @@ import { pathToFileURL } from "node:url";
 import { dev_server } from "./dev-server.js";
 import { API_HANDLER } from "./api-handler.js";
 import { importMiddlewares } from '../server-only-utils/import-middlwares.js'
+import { importPrerenderedRoutes } from "../server-only-utils/import-prerendered-routes.js";
+
 
 export async function createServer({ baseDir = process.cwd(), port = process.env.PORT || 5173 } = {}){
   const isProduction = process.env.NODE_ENV === "production";
@@ -33,6 +35,13 @@ export async function createServer({ baseDir = process.cwd(), port = process.env
   // Serve HTML
   app.use('/.client', express.static(path.join(process.cwd(), 'dist/.client')))
   // app.use(express.static('public'))
+  const PRERENDERED_ROUTES = await importPrerenderedRoutes()
+  console.log(PRERENDERED_ROUTES)
+  for(let i=0; i<PRERENDERED_ROUTES.length; i++){
+    app.get(PRERENDERED_ROUTES[i], (req, res)=>{
+      res.sendFile(path.join(process.cwd(), `dist/${PRERENDERED_ROUTES[i]}/index.html`))
+    })
+  }
   app.get('/', (req, res)=>{
     res.sendFile(path.join(process.cwd(), 'dist/index.html'))
   })
