@@ -23,16 +23,11 @@ export function EntryServer() {
     let [mask, module] = Object.entries(pairs).find(([route]) =>
       routesMatcher(route, `/${path}`),
     );
-    // console.log({module})
     let UIElement, html, params;
-    if (isDynamic(mask)) {
-      params = dynamicRoutesParser(mask, `/${path}`);
-      UIElement = await module.handler.call(this, params);
-    } 
+    if (isDynamic(mask)) params = dynamicRoutesParser(mask, `/${path}`);
     const {Component, GET, POST, DELETE, UPDATE, head} = await module
-
     if(Component){
-      UIElement = params ? await module.Component.call(this, params) : await module.Component();
+      UIElement = params ? await Component.call(this, params) : await Component();
       html = renderToString(UIElement);
     }
 
