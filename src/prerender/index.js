@@ -2,63 +2,45 @@ import {
   globImports,
   renderToString,
   writeToDist,
-  ManifestParser
+  ManifestParser,
+  resolveStaticRoutes
  } from "ziko-server/server-only-utils";
 
 const StaticRoutesMap = {
     "/blog/[...slug]":[
-        { slug : 1},
-        { slug : 2},
-        { slug : 3}
+        { slug : 1 },
+        { slug : 2 },
+        { slug : 3 }
     ],
-    // "/blog/lang/:lang/id/:id":[
-    //     { lang : "en", id : 1},
-    //     { lang : "en", id : 2},
-    //     { lang : "en", id : 3},
-    //     { lang : "fr", id : 1},
-    //     { lang : "fr", id : 2},
-    //     { lang : "fr", id : 3}
-    // ]
+    "/bb/[lang]/dd/[id]":[
+        { lang : "en", id : 1},
+        { lang : "en", id : 2},
+        { lang : "en", id : 3},
+        { lang : "fr", id : 1},
+        { lang : "fr", id : 2},
+        { lang : "fr", id : 3}
+    ]
 }
-async function resolveStaticRoutes(routes, StaticRoutesMap) {
-  const result = {};
 
-  for (const [routePattern, handler] of Object.entries(routes)) {
-    const staticParamsList = StaticRoutesMap[routePattern];
-
-    if (staticParamsList && routePattern.includes(':')) {
-      for (const params of staticParamsList) {
-        const resolvedRoute = routePattern.replace(/:([^/]+)/g, (_, key) => {
-          return encodeURIComponent(params[key]);
-        });
-        result[resolvedRoute] = () => handler(params);
-        // console.log({handler})
-      }
-    } else {
-      result[routePattern] = handler;
-    }
-  }
-
-  return result;
-}
 
 
 async function prerender({outDir = 'dist'} = "") {
     const HTML = []
-    const pages = await globImports("./src/pages/**/*{.js,.mdz}") 
+    const pages = await globImports("./src/pages/**/*{.js,.ts,.mdz}") 
     const StaticPags = await resolveStaticRoutes(pages, StaticRoutesMap)
     const Manifest = new ManifestParser(`${outDir}/.client/.vite/manifest.json`)
     // console.log({StaticPags})
 
+    console.log({StaticPags})
     for(let route in StaticPags){
         const Page = StaticPags[route];
         const {Component} = Page
-        console.log({Page})
+        // console.log({Page})
         if(Component){
           const res = await Component();
           const html = renderToString(res)
-          HTML.push({route, html})
-          writeToDist({route, html, entry_client_path : Manifest.EntryClientFile, outDir})
+          // HTML.push({route, html})
+          // writeToDist({route, html, entry_client_path : Manifest.EntryClientFile, outDir})
         }
 
     }

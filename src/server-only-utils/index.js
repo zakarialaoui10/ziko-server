@@ -5,3 +5,4 @@ export * from "./write-to-dist.js";
 export * from './manifest-parser.js';
 export * from './import-entry-server.js'
 export * from './import-middlwares.js'
+export * from './resolve-static-routes.js'
