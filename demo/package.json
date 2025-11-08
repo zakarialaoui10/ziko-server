@@ -8,7 +8,7 @@
         "dev": "node .ziko/server.js",
         "build:client": "cross-env TARGET=client vite build --config vite.config.js",
         "build:server": "cross-env TARGET=server vite build --config vite.config.js",
-        "build:static": "node .ziko/prerender",
+        "build:static": "node .ziko/scripts/prerender",
         "build:ssr": "npm run build:client && npm run build:server",
         "build:mixed" : "npm run build:ssr && npm run build:static",
         "preview:ssr": "cross-env NODE_ENV=production node .ziko/server",

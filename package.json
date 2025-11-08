@@ -1,6 +1,6 @@
 {
   "name": "ziko-server",
-  "version": "0.12.0",
+  "version": "0.13.0",
   "description": "server side rendering in zikojs with file-based-routing and client side hydration",
   "type": "module",
   "source": "src/index.js",
@@ -17,9 +17,11 @@
     "ziko",
     "zikojs",
     "ssr",
+    "ssg",
     "rendering",
     "hydration",
-    "server"
+    "server",
+    "middlewares"
   ],
   "scripts": {
     "dev": "rollup -c rollup.config.js -w",

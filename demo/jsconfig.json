@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "checkJs": true,
+    "module": "esnext",
+    "target": "es2020",
+    "moduleResolution": "node",
+    "baseUrl": ".",
+    "typeRoots": ["./types", "./node_modules/@types"]
+  },
+  "include": ["src/**/*", "pages/**/*", "types/**/*"]
+}

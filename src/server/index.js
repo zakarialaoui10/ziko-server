@@ -16,9 +16,9 @@ export async function createServer({ baseDir = process.cwd(), port = process.env
   const app = express();
 
   const Middlewares = await importMiddlewares()
-  console.log({Middlewares})
+  // console.log({Middlewares})
 
-  // app.use(Middlewares.logger)
+  app.use(Middlewares.logger)
 
   let vite;
   if (!isProduction) vite = await dev_server(app, base)
@@ -36,15 +36,16 @@ export async function createServer({ baseDir = process.cwd(), port = process.env
   app.use('/.client', express.static(path.join(process.cwd(), 'dist/.client')))
   // app.use(express.static('public'))
   const PRERENDERED_ROUTES = await importPrerenderedRoutes()
-  console.log(PRERENDERED_ROUTES)
+  // console.log(PRERENDERED_ROUTES)
   for(let i=0; i<PRERENDERED_ROUTES.length; i++){
     app.get(PRERENDERED_ROUTES[i], (req, res)=>{
       res.sendFile(path.join(process.cwd(), `dist/${PRERENDERED_ROUTES[i]}/index.html`))
     })
   }
-  app.get('/', (req, res)=>{
-    res.sendFile(path.join(process.cwd(), 'dist/index.html'))
-  })
+  // app.get('/', (req, res)=>{
+  //   console.log(req.locals)
+  //   res.sendFile(path.join(process.cwd(), 'dist/index.html'))
+  // })
   app.use("*", async (req, res) => {
     try {
       const url = req.originalUrl.replace(base, "");
@@ -65,13 +66,15 @@ export async function createServer({ baseDir = process.cwd(), port = process.env
         const ENTRY_SERVER_PATH = pathToFileURL(join(baseDir, "./dist/.server/entry-server.js")).href;
         render = (await import(/* @vite-ignore */ENTRY_SERVER_PATH)).default;
       }
-      const rendered = await render(url);
-      const page = await rendered(url);
+      const rendered = await render(url, req);
+      const page = await rendered(url, req);
       if(page.GET) return await API_HANDLER(page.GET, req, res)
       if(page.POST) return await API_HANDLER(page.POST, req, res)
       if(page.PUT) return await API_HANDLER(page.PUT, req, res)
       if(page.DELETE) return await API_HANDLER(page.DELETE, req, res)
       if(page.PATCH) return await API_HANDLER(page.PATCH, req, res)
+
+        // console.log({ziko : page.__Ziko__})
         
       const html = template
         .replace(`<!--app-head-->`, page.head ?? "")
