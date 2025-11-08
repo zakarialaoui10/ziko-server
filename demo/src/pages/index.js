@@ -1,5 +1,5 @@
 import {tags, Random} from "ziko"
-
+console.log(Ziko)
 export const head = {
     title : 'Ziko Server Home Page',
 }
