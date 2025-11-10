@@ -1,11 +1,10 @@
 import {
     customPath,
-    // routesMatcher,
+    routesMatcher,
     dynamicRoutesParser,
     isDynamic,
   } from "../utils/index.js";
 
-import { routesMatcher } from "../utils/routes-matcher-exp.js";
 export function EntryClient({base = '', pages}={}){
   if(import.meta.env.DEV) pages = import.meta.glob("/src/pages/**/*{.js,.mdz}")
   addEventListener("load", (async () => {

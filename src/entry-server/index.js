@@ -1,19 +1,13 @@
-// import {
-//   // customPath,
-//   // routesMatcher,
-//   // dynamicRoutesParser,
-//   // isDynamic,
-// } from "../utils/index.js";
 import { 
   renderToString,
   globImports, 
- } from "../server-only-utils/index.js";
+} from "../server-only-utils/index.js";
 
- import { 
+import { 
   routesMatcher,
   dynamicRoutesParser,
   isDynamic
- } from "../utils/routes-matcher-exp.js";
+} from "../utils/routes-matcher.js";
 
 export function EntryServer() {
   return async function render(path, req, res) {
