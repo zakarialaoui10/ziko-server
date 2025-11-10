@@ -34,9 +34,11 @@ export function EntryClient({base = '', pages}={}){
       else UIElement = await callback().unrender();
       // document.body.innerHTML = ""
       // document.body.append(UIElement.element)
-      const ElementsNeedsHydration = [...document.querySelectorAll('[data-hi]')]
-      globalThis.el = ElementsNeedsHydration;
-      el[0].replaceWith(__Ziko__.__UI__[0].element)
+      const ElementsNeedsHydration = [...document.querySelectorAll('[data-hydration-index]')]
+      ElementsNeedsHydration.forEach(element => {
+        element.replaceWith(__Ziko__.__HYDRATION__.store.get(+element.dataset.hydrationIndex)().element)
+      }
+      )
     }  
     hydrate(location.pathname.slice(1));
   }))

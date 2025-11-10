@@ -11,11 +11,13 @@ const App = () =>{
     // console.log({ziko})
     // if(req.locals) return tags.h1(req.locals.user)
     const ui = tags.p(
-        span('Interactive').style({color : "red"}).onPtrDown(e=>e.target.style({color : Random.color()})).setAttr('data-hi', '0'), 
+        span('Interactive')
+            .style({color : "red"})
+            .onPtrDown(e=>e.target.style({color : Random.color()}))
+            .useClient()
+            ,
         span('Not Interactive')
     )
-        
-    // console.log(__Ziko__)
     return ui
 }
 
