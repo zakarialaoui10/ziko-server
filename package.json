@@ -1,6 +1,6 @@
 {
   "name": "ziko-server",
-  "version": "0.13.0",
+  "version": "0.14.0",
   "description": "server side rendering in zikojs with file-based-routing and client side hydration",
   "type": "module",
   "source": "src/index.js",
@@ -11,7 +11,7 @@
   ],
   "exports": {
     ".": "./src/index.js",
-    "./*" : "./src/*/index.js"
+    "./*": "./src/*/index.js"
   },
   "keywords": [
     "ziko",
@@ -27,7 +27,7 @@
     "dev": "rollup -c rollup.config.js -w",
     "build": "rollup -c rollup.config.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start-demo" : "cd demo && npm run dev "
+    "start-demo": "cd demo && npm run dev "
   },
   "repository": {
     "type": "git",
@@ -54,6 +54,6 @@
     "jsdom": "^26.0.0",
     "sirv": "^3.0.1",
     "vite": "^6.3.5",
-    "ziko": "^0.45.5"
+    "ziko": "^0.48.0"
   }
 }

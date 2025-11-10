@@ -14,10 +14,12 @@ export function EntryClient({base = '', pages}={}){
     const routes = Object.keys(pages);
     const root = "./pages/";
     const pairs = {};
+    const _pairs = {}
     for (let i = 0; i < routes.length; i++) {
       const module = await pages[routes[i]]();
       const component = await module.default;
       Object.assign(pairs, { [customPath(routes[i], root)]: component });
+      Object.assign(_pairs, { [customPath(routes[i], root)] : await module})
     }
     async function hydrate(path) {
       if(path.endsWith("/")) path = path.slice(0, -1);
@@ -27,14 +29,15 @@ export function EntryClient({base = '', pages}={}){
       let UIElement;
       if (isDynamic(mask)) {
         const params = dynamicRoutesParser(mask, `/${path}`);
-        UIElement = await callback.call(this, params);
+        UIElement = await callback.call(this, params).unrender();
       } 
-      else UIElement = await callback();
-      document.body.innerHTML = ""
-      document.body.append(UIElement.element)
-      // document.body.replaceWith(UIElement.element);
-      // To Fix ( replace intercative elements only )
-    }
+      else UIElement = await callback().unrender();
+      // document.body.innerHTML = ""
+      // document.body.append(UIElement.element)
+      const ElementsNeedsHydration = [...document.querySelectorAll('[data-hi]')]
+      globalThis.el = ElementsNeedsHydration;
+      el[0].replaceWith(__Ziko__.__UI__[0].element)
+    }  
     hydrate(location.pathname.slice(1));
   }))
 }

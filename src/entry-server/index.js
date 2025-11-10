@@ -26,20 +26,20 @@ export function EntryServer() {
     if (isDynamic(mask)) params = dynamicRoutesParser(mask, `/${path}`);
     const {Component, GET, POST, DELETE, UPDATE, head, prerender} = await module
     if(Component){
-      const ziko = {req, res}
-      UIElement = params ? await Component.call(this, {...params, ziko}) : await Component({ziko});
+      UIElement = params ? await Component.call(this, params) : await Component();
       html = renderToString(UIElement);
+      // console.log(__Ziko__.__HYDRATION__)
     }
 
     return {
       head,
       html,
       prerender,
+      hydration_map : __Ziko__.__HYDRATION__,
       GET,
       POST,
       DELETE,
       UPDATE,
-      __Ziko__
     };
   };
 }

@@ -57,11 +57,6 @@ export async function createServer({ baseDir = process.cwd(), port = process.env
         render = (await vite.ssrLoadModule("/.ziko/entry-server.js")).default;
       } 
       else {
-        // const file_path = join(process.cwd(), 'dist', url, 'index.html')
-        // const file_exist = existsSync(file_path)
-        // if (file_exist) {
-        //   res.sendFile(file_path)
-        // } 
         template = HTML_TEMPLATE;
         const ENTRY_SERVER_PATH = pathToFileURL(join(baseDir, "./dist/.server/entry-server.js")).href;
         render = (await import(/* @vite-ignore */ENTRY_SERVER_PATH)).default;
@@ -73,6 +68,7 @@ export async function createServer({ baseDir = process.cwd(), port = process.env
       if(page.PUT) return await API_HANDLER(page.PUT, req, res)
       if(page.DELETE) return await API_HANDLER(page.DELETE, req, res)
       if(page.PATCH) return await API_HANDLER(page.PATCH, req, res)
+
 
         // console.log({ziko : page.__Ziko__})
         
