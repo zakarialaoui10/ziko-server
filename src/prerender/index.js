@@ -28,6 +28,7 @@ async function prerender({outDir = 'dist'} = "") {
     const PRERENDERED_ROUTES = []
     const pages = await globImports("./src/pages/**/*{.js,.ts,.mdz}") 
     const StaticPages = await resolveStaticRoutes(pages, StaticRoutesMap)
+
     const Manifest = new ManifestParser(`${outDir}/.client/.vite/manifest.json`)
     for(let route in StaticPages){
         const Component = StaticPages[route];
@@ -37,7 +38,7 @@ async function prerender({outDir = 'dist'} = "") {
           PRERENDERED_ROUTES.push(route)
           writeToDist({route, html, entry_client_path : Manifest.EntryClientFile, outDir})
         }
-        console.log(PRERENDERED_ROUTES)
+        // console.log(PRERENDERED_ROUTES)
     }
 }
 

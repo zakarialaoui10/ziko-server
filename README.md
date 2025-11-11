@@ -4,7 +4,6 @@
 # Ziko-server
 
 Server-side rendering for Zikojs with file-based routing and client-side hydration.
-<!-- Provides server-side rendering with file-based routing for ZikoJS, ***featuring zero configuration client-side hydration.***  -->
 
 # Features 
 - ✅ Server Side Rendering 
@@ -13,6 +12,7 @@ Server-side rendering for Zikojs with file-based routing and client-side hydrati
 - ✅ Mdzjs Supports
 - ✅ Supports Dynamic Routes
 - ✅ Supports both Sync And Async rendering
+- ✅ Supports API
 
 <!-- 
 compare with type
@@ -20,14 +20,20 @@ compare with type
 
 # Project Structure
 ```
-ziko-ssr-app
+App
+   ├──public/ 
    ├── src/
-      ├── server.js
-      ├── entry-server.js
-      ├── entry-client.js
-      ├── pages/
+      ├── .ziko  #generated
+      ├── pages/ # required
             ├── index.js 
-   ├── index.html
+      ├── components/
+      ├── layouts/
+      ├── contents/
+      ├── db/
+      ├── i18n/
+      ├── middlewares.js
+   ├── tsconfig.json
+   ├── ziko.config.js
    ├── package.json
     
 ```

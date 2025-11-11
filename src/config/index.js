@@ -10,7 +10,7 @@ export function defineConfig({ outDir = "dist" } = {}) {
       mode,
     });
     base_config.plugins = base_config.plugins || [];
-    base_config.plugins.push(injectEntryClient({ outDir, mode }));
+    // base_config.plugins.push(injectEntryClient({ outDir, mode }));
     return base_config;
   });
 }

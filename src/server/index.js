@@ -12,7 +12,7 @@ import { hydration_setup } from './middlewares.js'
 export async function createServer({ baseDir = process.cwd(), port = process.env.PORT || 5173 } = {}){
   const isProduction = process.env.NODE_ENV === "production";
   const base = process.env.BASE || "/";
-  const HTML_TEMPLATE = isProduction ? await readFile(join(baseDir, "./dist/.client/index.html"), "utf-8") : "";
+  const HTML_TEMPLATE = isProduction ? await readFile(join(baseDir, "./dist/.client/.ziko/index.html"), "utf-8") : "";
   const app = express();
 
   app.use(hydration_setup)
@@ -38,22 +38,19 @@ export async function createServer({ baseDir = process.cwd(), port = process.env
   // app.use(express.static('public'))
   const PRERENDERED_ROUTES = await importPrerenderedRoutes()
   // console.log(PRERENDERED_ROUTES)
-  // for(let i=0; i<PRERENDERED_ROUTES.length; i++){
-  //   app.get(PRERENDERED_ROUTES[i], (req, res)=>{
-  //     res.sendFile(path.join(process.cwd(), `dist/${PRERENDERED_ROUTES[i]}/index.html`))
-  //   })
-  // }
-  // app.get('/', (req, res)=>{
-  //   console.log(req.locals)
-  //   res.sendFile(path.join(process.cwd(), 'dist/index.html'))
-  // })
+  for(let i=0; i<PRERENDERED_ROUTES.length; i++){
+    app.get(PRERENDERED_ROUTES[i], (req, res)=>{
+      res.sendFile(path.join(process.cwd(), `dist/${PRERENDERED_ROUTES[i]}/index.html`))
+    })
+  }
+
   app.use("*", async (req, res) => {
     try {
       const url = req.originalUrl.replace(base, "");
       let template;
       let render;
       if (!isProduction) {
-        template = await readFile(join(baseDir, "./index.html"), "utf-8");
+        template = await readFile(join(baseDir, "./.ziko/index.html"), "utf-8");
         template = await vite.transformIndexHtml(url, template);
         render = (await vite.ssrLoadModule("/.ziko/entry-server.js")).default;
       } 
@@ -76,7 +73,7 @@ export async function createServer({ baseDir = process.cwd(), port = process.env
       const html = template
         // .replace(`<!--app-head-->`, page.head ?? "")
         .replace(`<!--app-html-->`, page.html ?? "")
-        .concat('<b>concat</b>')
+        // .concat('<b>concat</b>')
         
 
 

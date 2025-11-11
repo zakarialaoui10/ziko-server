@@ -1,6 +1,6 @@
-import { ManifestParser } from "../server-only-utils/manifest-parser.js"
+import { ManifestParser } from "../server-only-utils/index.js"
 export const injectEntryClient = ({outDir, mode}) => {
-    const Manifest = new ManifestParser(`${outDir}/.client/.vite/manifest.json`)
+    const Manifest = mode === 'production' && new ManifestParser(`${outDir}/.client/.vite/manifest.json`)
     return {
         name: "inject-entry-client",
         transformIndexHtml() {

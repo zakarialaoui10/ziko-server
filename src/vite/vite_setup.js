@@ -12,8 +12,8 @@ export function vite_setup({outDir = 'dist'} = {}){
                 manifest: true, 
                 rollupOptions: {
                     input: {
-                     main :  resolve(process.cwd(), ".ziko/entry-client.js"),
-                     index : resolve(process.cwd(), 'index.html')
+                        main  : resolve(process.cwd(), ".ziko/entry-client.js"),
+                        index : resolve(process.cwd(), '.ziko/index.html')
                     },
                     output: {
                         entryFileNames: `assets/[name].[hash].js`,
