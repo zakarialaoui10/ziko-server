@@ -1,10 +1,5 @@
 import { resolve } from 'path'
-import { injectEntryClient } from './entry-client-plugin.js';
-export function vite_setup({outDir = 'dist', plugins, mode} = {}){
-    // const all_plugins = [
-    //     injectEntryClient({mode, outDir}),
-    //     ...plugins
-    // ]
+export function vite_setup({outDir = 'dist'} = {}){
     const Target = process.env.TARGET;
     const isClient = (Target === 'client')
     const isServer = (Target === 'server')

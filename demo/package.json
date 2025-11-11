@@ -6,8 +6,8 @@
     "scripts": {
         "generate:routes": "node .ziko/generate-routes.js",
         "dev": "node .ziko/server.js",
-        "build:client": "cross-env TARGET=client vite build --config vite.config.js",
-        "build:server": "cross-env TARGET=server vite build --config vite.config.js",
+        "build:client": "cross-env TARGET=client vite build --config ziko.config.js",
+        "build:server": "cross-env TARGET=server vite build --config ziko.config.js",
         "build:static": "node .ziko/scripts/prerender",
         "build:ssr": "npm run build:client && npm run build:server",
         "build:mixed": "npm run build:ssr && npm run build:static",
