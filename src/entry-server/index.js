@@ -16,17 +16,17 @@ export function EntryServer() {
     let [mask, module] = Object.entries(pairs).find(([route]) =>
       routesMatcher(route, `/${path}`),
     );
-    let UIElement, html, params;
+    let UIElement, ui, params;
     if (isDynamic(mask)) params = dynamicRoutesParser(mask, `/${path}`);
     const {Component, GET, POST, DELETE, UPDATE, head, prerender} = await module
     if(Component){
       UIElement = params ? await Component.call(this, params) : await Component();
-      html = renderToString(UIElement);
+      ui = renderToString(UIElement);
     }
 
     return {
       head,
-      html,
+      ui,
       prerender,
       hydration_map : __Ziko__.__HYDRATION__,
       GET,

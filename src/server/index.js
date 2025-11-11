@@ -1,5 +1,4 @@
 import {readFile} from "node:fs/promises";
-// import { existsSync } from "node:fs";
 import express from "express";
 import path, {join} from "node:path";
 import { pathToFileURL } from "node:url";
@@ -66,17 +65,11 @@ export async function createServer({ baseDir = process.cwd(), port = process.env
       if(page.PUT) return await API_HANDLER(page.PUT, req, res)
       if(page.DELETE) return await API_HANDLER(page.DELETE, req, res)
       if(page.PATCH) return await API_HANDLER(page.PATCH, req, res)
-
-
-        // console.log({ziko : page.__Ziko__})
         
       const html = template
         // .replace(`<!--app-head-->`, page.head ?? "")
-        .replace(`<!--app-html-->`, page.html ?? "")
-        // .concat('<b>concat</b>')
+        .replace(`<!--app-html-->`, page.ui ?? "")
         
-
-
       res.status(200).set({ "Content-Type": "text/html" }).send(html);
     } 
     catch (e) {
