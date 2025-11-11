@@ -22,7 +22,6 @@ export function EntryServer() {
     if(Component){
       UIElement = params ? await Component.call(this, params) : await Component();
       html = renderToString(UIElement);
-      // console.log(__Ziko__.__HYDRATION__)
     }
 
     return {

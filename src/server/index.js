@@ -7,6 +7,7 @@ import { dev_server } from "./dev-server.js";
 import { API_HANDLER } from "./api-handler.js";
 import { importMiddlewares } from '../server-only-utils/import-middlwares.js'
 import { importPrerenderedRoutes } from "../server-only-utils/import-prerendered-routes.js";
+import { hydration_setup } from './middlewares.js'
 
 
 export async function createServer({ baseDir = process.cwd(), port = process.env.PORT || 5173 } = {}){
@@ -15,8 +16,9 @@ export async function createServer({ baseDir = process.cwd(), port = process.env
   const HTML_TEMPLATE = isProduction ? await readFile(join(baseDir, "./dist/.client/index.html"), "utf-8") : "";
   const app = express();
 
+  app.use(hydration_setup)
+
   const Middlewares = await importMiddlewares()
-  // console.log({Middlewares})
 
   app.use(Middlewares.logger)
 
@@ -73,8 +75,10 @@ export async function createServer({ baseDir = process.cwd(), port = process.env
         // console.log({ziko : page.__Ziko__})
         
       const html = template
-        .replace(`<!--app-head-->`, page.head ?? "")
+        // .replace(`<!--app-head-->`, page.head ?? "")
         .replace(`<!--app-html-->`, page.html ?? "");
+
+        console.log({template})
 
       res.status(200).set({ "Content-Type": "text/html" }).send(html);
     } 
