@@ -1,5 +1,10 @@
 import { resolve } from 'path'
-export function build({outDir = 'dist'} = {}){
+import { injectEntryClient } from './entry-client-plugin.js';
+export function vite_setup({outDir = 'dist', plugins, mode} = {}){
+    // const all_plugins = [
+    //     injectEntryClient({mode, outDir}),
+    //     ...plugins
+    // ]
     const Target = process.env.TARGET;
     const isClient = (Target === 'client')
     const isServer = (Target === 'server')
@@ -20,7 +25,7 @@ export function build({outDir = 'dist'} = {}){
                         chunkFileNames: `assets/[name].[hash].js`,
                         assetFileNames: `assets/[name].[hash].[ext]`,
                     },
-                    },
+                },
             }
         }
     }

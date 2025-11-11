@@ -9,7 +9,6 @@ import { importMiddlewares } from '../server-only-utils/import-middlwares.js'
 import { importPrerenderedRoutes } from "../server-only-utils/import-prerendered-routes.js";
 import { hydration_setup } from './middlewares.js'
 
-
 export async function createServer({ baseDir = process.cwd(), port = process.env.PORT || 5173 } = {}){
   const isProduction = process.env.NODE_ENV === "production";
   const base = process.env.BASE || "/";
@@ -39,11 +38,11 @@ export async function createServer({ baseDir = process.cwd(), port = process.env
   // app.use(express.static('public'))
   const PRERENDERED_ROUTES = await importPrerenderedRoutes()
   // console.log(PRERENDERED_ROUTES)
-  for(let i=0; i<PRERENDERED_ROUTES.length; i++){
-    app.get(PRERENDERED_ROUTES[i], (req, res)=>{
-      res.sendFile(path.join(process.cwd(), `dist/${PRERENDERED_ROUTES[i]}/index.html`))
-    })
-  }
+  // for(let i=0; i<PRERENDERED_ROUTES.length; i++){
+  //   app.get(PRERENDERED_ROUTES[i], (req, res)=>{
+  //     res.sendFile(path.join(process.cwd(), `dist/${PRERENDERED_ROUTES[i]}/index.html`))
+  //   })
+  // }
   // app.get('/', (req, res)=>{
   //   console.log(req.locals)
   //   res.sendFile(path.join(process.cwd(), 'dist/index.html'))
@@ -76,9 +75,10 @@ export async function createServer({ baseDir = process.cwd(), port = process.env
         
       const html = template
         // .replace(`<!--app-head-->`, page.head ?? "")
-        .replace(`<!--app-html-->`, page.html ?? "");
+        .replace(`<!--app-html-->`, page.html ?? "")
+        .concat('<b>concat</b>')
+        
 
-        console.log({template})
 
       res.status(200).set({ "Content-Type": "text/html" }).send(html);
     } 

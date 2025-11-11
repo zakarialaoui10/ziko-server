@@ -28,9 +28,10 @@ export function EntryClient({base = '', pages}={}){
       let UIElement;
       if (isDynamic(mask)) {
         const params = dynamicRoutesParser(mask, `/${path}`);
-        UIElement = await callback.call(this, params).unrender();
+        UIElement = (await callback.call(this, params)).unrender();
       } 
       else UIElement = await callback().unrender();
+      // UIElement.unrender()
       // document.body.innerHTML = ""
       // document.body.append(UIElement.element)
       const ElementsNeedsHydration = [...document.querySelectorAll('[data-hydration-index]')]
