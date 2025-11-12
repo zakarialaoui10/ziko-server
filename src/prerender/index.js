@@ -3,8 +3,10 @@ import {
   renderToString,
   writeToDist,
   ManifestParser,
-  resolveStaticRoutes
+  resolveStaticRoutes,
  } from "ziko-server/server-only-utils";
+
+import { routesGrouper } from "../utils/routes-matcher.js";
 
 const StaticRoutesMap = {
     "/blog/[...slug]":[
@@ -29,16 +31,31 @@ async function prerender({outDir = 'dist'} = "") {
     const pages = await globImports("./src/pages/**/*{.js,.ts,.mdz}") 
     const StaticPages = await resolveStaticRoutes(pages, StaticRoutesMap)
 
+    // console.log({pages, StaticPages})
+
+    const grouped = routesGrouper(pages)
+
     const Manifest = new ManifestParser(`${outDir}/.client/.vite/manifest.json`)
-    for(let route in StaticPages){
-        const Component = StaticPages[route];
+    for(let route in grouped.static){
+        const Page = grouped.static[route];
+        const {Component, head} = Page
         if(Component){
           const res = await Component();
-          const html = renderToString(res)
+          const ui = renderToString(res)
           PRERENDERED_ROUTES.push(route)
-          writeToDist({route, html, entry_client_path : Manifest.EntryClientFile, outDir})
+          writeToDist({route, ui, head, entry_client_path : Manifest.EntryClientFile, outDir})
         }
-        // console.log(PRERENDERED_ROUTES)
+    }
+    for(let route in StaticPages){
+        const Page = StaticPages[route];
+        const {Component, head} = Page
+        if(Component){
+          const res = await Component();
+          const ui = renderToString(res)
+          PRERENDERED_ROUTES.push(route)
+          writeToDist({route, ui, head, entry_client_path : Manifest.EntryClientFile, outDir})
+        }
+        console.log(PRERENDERED_ROUTES)
     }
 }
 
