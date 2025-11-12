@@ -1,4 +1,3 @@
-// import {join} from 'path'
 export const dev_server = async (app, base)=>{
     const { createServer } = await import("vite");
     let vite = await createServer({
@@ -9,6 +8,8 @@ export const dev_server = async (app, base)=>{
     app.use(vite.middlewares);
     return vite
 }
+
+// import {join} from 'path'
 // export const prod_server = async (app, base, baseDir)=>{
 //   const compression = (await import("compression")).default;
 //   const sirv = (await import("sirv")).default;

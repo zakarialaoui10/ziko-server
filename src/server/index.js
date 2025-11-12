@@ -1,23 +1,25 @@
-import {readFile} from "node:fs/promises";
 import express from "express";
-import path, {join} from "node:path";
+import { readFile } from "node:fs/promises";
+import path, { join } from "node:path";
 import { pathToFileURL } from "node:url";
 import { dev_server } from "./dev-server.js";
 import { API_HANDLER } from "./api-handler.js";
-import { importMiddlewares } from '../server-only-utils/import-middlwares.js'
-import { importPrerenderedRoutes } from "../server-only-utils/import-prerendered-routes.js";
+import { 
+  importMiddlewares,
+  importPrerenderedRoutes
+} from '../server-only-utils/index.js'
 import { hydration_setup } from './middlewares.js'
+import { setup_ziko_folder } from "../setup/setup-ziko-folder.js";
 
 export async function createServer({ baseDir = process.cwd(), port = process.env.PORT || 5173 } = {}){
+  await setup_ziko_folder(join(baseDir, './.ziko-experimental'))
   const isProduction = process.env.NODE_ENV === "production";
   const base = process.env.BASE || "/";
   const HTML_TEMPLATE = isProduction ? await readFile(join(baseDir, "./dist/.client/.ziko/index.html"), "utf-8") : "";
   const app = express();
 
   app.use(hydration_setup)
-
   const Middlewares = await importMiddlewares()
-
   app.use(Middlewares.logger)
 
   let vite;
