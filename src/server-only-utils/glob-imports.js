@@ -1,7 +1,7 @@
 import fg from 'fast-glob';
 import path from 'path';
 import { pathToFileURL } from 'url';
-import { customPath } from '../utils/custom-path.js';
+import { normalize_path } from '../utils/normalize-path.js';
 
 export async function globImports(pattern = './src/pages/**/*.{js,ts,jsx,tsx,mdz}', { cwd = process.cwd() , root = "./pages/"} = {}) {
   const files = await fg(pattern, { cwd });
@@ -31,7 +31,7 @@ export async function globImports(pattern = './src/pages/**/*.{js,ts,jsx,tsx,mdz
       } = await module
 
       Object.assign(pairs, { 
-        [customPath(routes[i], root)]: {
+        [normalize_path(routes[i], root)]: {
           ...(Component && {Component}),
           ...(head && {head}),
           ...(prerender !== undefined && {prerender}),

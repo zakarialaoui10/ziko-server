@@ -1,5 +1,5 @@
 import {
-    customPath,
+    normalize_path,
     routesMatcher,
     dynamicRoutesParser,
     isDynamic,
@@ -17,8 +17,8 @@ export function EntryClient({base = '', pages}={}){
     for (let i = 0; i < routes.length; i++) {
       const module = await pages[routes[i]]();
       const component = await module.default;
-      Object.assign(pairs, { [customPath(routes[i], root)]: component });
-      Object.assign(_pairs, { [customPath(routes[i], root)] : await module})
+      Object.assign(pairs, { [normalize_path(routes[i], root)]: component });
+      Object.assign(_pairs, { [normalize_path(routes[i], root)] : await module})
     }
     async function hydrate(path) {
       if(path.endsWith("/")) path = path.slice(0, -1);
