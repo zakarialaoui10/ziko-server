@@ -7,6 +7,7 @@ export function defineConfig({ outDir = "dist" } = {}) {
       mode,
     });
     base_config.plugins = base_config.plugins || [];
+    base_config.aaa = 10
     return base_config;
   });
 }
