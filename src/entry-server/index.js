@@ -1,6 +1,7 @@
 import { 
   renderToString,
-  globImports, 
+  globImports,
+  readFiles, 
 } from "../server-only-utils/index.js";
 
 import { 
@@ -12,10 +13,10 @@ import {
 export function EntryServer() {
   return async function render(path, req, res) {
     if(path.endsWith("/")) path = path.slice(0, -1);
+    // const all_files = await readFiles()
     const pairs = await globImports("./src/pages/**/*{.js,.mdz}")
-    let [mask, module] = Object.entries(pairs).find(([route]) =>
-      routesMatcher(route, `/${path}`),
-    );
+
+    let [mask, module] = Object.entries(pairs).find(([route]) => routesMatcher(route, `/${path}`));
     let UIElement, ui, params;
     if (isDynamic(mask)) params = dynamicRoutesParser(mask, `/${path}`);
     const {Component, GET, POST, DELETE, UPDATE, head, prerender} = await module

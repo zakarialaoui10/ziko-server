@@ -1,6 +1,6 @@
 import { tags } from "ziko/ui"
 import { Random } from 'ziko'
-
+'use client'
 export const head = {
     title : 'Ziko Server Home Page',
 }

@@ -6,7 +6,7 @@ import { dev_server } from "./dev-server.js";
 import { API_HANDLER } from "./api-handler.js";
 import { 
   importMiddlewares,
-  importPrerenderedRoutes
+  importPrerenderedRoutes,
 } from '../server-only-utils/index.js'
 import { hydration_setup } from './middlewares.js'
 import { setup_ziko_folder } from "../setup/setup-ziko-folder.js";
@@ -38,12 +38,16 @@ export async function createServer({ baseDir = process.cwd(), port = process.env
   app.use('/.client', express.static(path.join(process.cwd(), 'dist/.client')))
   // app.use(express.static('public'))
   const PRERENDERED_ROUTES = await importPrerenderedRoutes()
-  // console.log(PRERENDERED_ROUTES)
-  for(let i=0; i<PRERENDERED_ROUTES.length; i++){
-    app.get(PRERENDERED_ROUTES[i], (req, res)=>{
-      res.sendFile(path.join(process.cwd(), `dist/${PRERENDERED_ROUTES[i]}/index.html`))
-    })
-  }
+  // HYDRATION ISSUE BEACUSE OF /
+  // for(let i=0; i<PRERENDERED_ROUTES.length; i++){
+  //   app.get(PRERENDERED_ROUTES[i], (req, res)=>{
+  //     res.sendFile(path.join(process.cwd(), `dist/${PRERENDERED_ROUTES[i]}/index.html`))
+  //   })
+  // }
+
+  app.get('/--ziko--', (req, res)=>{
+    res.json(globalThis.Ziko)
+  })
 
   app.use("*", async (req, res) => {
     try {

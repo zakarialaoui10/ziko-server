@@ -53,9 +53,11 @@ async function prerender({outDir = 'dist'} = "") {
           const res = await Component();
           const ui = renderToString(res)
           PRERENDERED_ROUTES.push(route)
+        //   console.log({hi :__Ziko__.__HYDRATION__.store, route})
+        //   __Ziko__.__HYDRATION__.reset()
           writeToDist({route, ui, head, entry_client_path : Manifest.EntryClientFile, outDir})
         }
-        console.log(PRERENDERED_ROUTES)
+        // console.log(PRERENDERED_ROUTES)
     }
 }
 

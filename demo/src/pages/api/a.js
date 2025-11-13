@@ -1,4 +1,4 @@
-export function GET(){
+export function GET({req, res, ...props}){
     return {
         a : 1,
         b : 2

@@ -6,3 +6,4 @@ export * from './manifest-parser.js';
 export * from './import-prerendered-routes.js'
 export * from './import-middlwares.js'
 export * from './resolve-static-routes.js'
+export * from './read-files.js'
