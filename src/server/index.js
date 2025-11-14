@@ -73,6 +73,14 @@ export async function createServer({ baseDir = process.cwd(), port = process.env
       if(page.PATCH) return await API_HANDLER(page.PATCH, req, res)
         
       const html = template
+        .replace(
+          '<!--app-session-data-->',
+          `
+          <script type='application/json' id='ziko-data'>
+          ${JSON.stringify({ a : 1})}
+          </script>
+          `
+        )
         // .replace(`<!--app-head-->`, page.head ?? "")
         .replace(`<!--app-html-->`, page.ui ?? "")
         

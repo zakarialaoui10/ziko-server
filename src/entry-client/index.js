@@ -6,9 +6,14 @@ import {
   } from "../utils/index.js";
 
 export function EntryClient({ base = '', pages } = {}) {
+  
   if (import.meta.env.DEV) pages = import.meta.glob("/src/pages/**/*{.js,.mdz}");
   pages = import.meta.glob("/src/pages/**/*{.js,.mdz}");
   addEventListener("load", async () => {
+    const data = JSON.parse(document.head.querySelector('script#ziko-data').textContent)
+    globalThis.Ziko = data
+    // const res = await fetch(`${location.href}--ziko--`)
+    // globalThis.Ziko = await res.json()
     const root = "./pages/";
     async function hydrate(path) {
       if (path.endsWith("/")) path = path.slice(0, -1);
