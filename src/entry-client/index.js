@@ -3,13 +3,14 @@ import {
     routesMatcher,
     dynamicRoutesParser,
     isDynamic,
-  } from "../utils/index.js";
-
+} from "../utils/index.js";
+import { define_derictives } from "../code-splitter/directives.js";
 export function EntryClient({ base = '', pages } = {}) {
   
   if (import.meta.env.DEV) pages = import.meta.glob("/src/pages/**/*{.js,.mdz}");
   pages = import.meta.glob("/src/pages/**/*{.js,.mdz}");
   addEventListener("load", async () => {
+    define_derictives()
     const data = JSON.parse(document.head.querySelector('script#ziko-data').textContent)
     globalThis.Ziko = data
     // const res = await fetch(`${location.href}--ziko--`)

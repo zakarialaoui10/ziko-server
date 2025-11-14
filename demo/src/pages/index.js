@@ -1,11 +1,10 @@
 import { tags } from "ziko/ui"
 import { Random } from 'ziko'
-'use client'
+use_server_only;
 export const head = {
     title : 'Ziko Server Home Page',
 }
 export const prerender = false;
-console.log(globalThis.AA)
 const {span} = tags
 const App = () =>{
     const ui = tags.p(
