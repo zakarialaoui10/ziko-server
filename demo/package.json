@@ -16,7 +16,6 @@
     },
     "dependencies": {
         "vite": "^6.0.7",
-        "ziko": "^0.48.0",
         "zod": "^4.1.12"
     },
     "devDependencies": {

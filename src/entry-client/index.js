@@ -3,14 +3,13 @@ import {
     routesMatcher,
     dynamicRoutesParser,
     isDynamic,
-} from "../utils/index.js";
-import { define_derictives } from "../code-splitter/directives.js";
+  } from "../utils/index.js";
+
 export function EntryClient({ base = '', pages } = {}) {
   
   if (import.meta.env.DEV) pages = import.meta.glob("/src/pages/**/*{.js,.mdz}");
   pages = import.meta.glob("/src/pages/**/*{.js,.mdz}");
   addEventListener("load", async () => {
-    define_derictives()
     const data = JSON.parse(document.head.querySelector('script#ziko-data').textContent)
     globalThis.Ziko = data
     // const res = await fetch(`${location.href}--ziko--`)
@@ -35,7 +34,7 @@ export function EntryClient({ base = '', pages } = {}) {
         UIElement = await module.default();
       }
 
-      UIElement.unrender();
+      UIElement.unmount();
 
       const elementsToHydrate = [...document.querySelectorAll('[data-hydration-index]')];
       elementsToHydrate.forEach(el => {

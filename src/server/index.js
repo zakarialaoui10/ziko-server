@@ -39,11 +39,11 @@ export async function createServer({ baseDir = process.cwd(), port = process.env
   // app.use(express.static('public'))
   const PRERENDERED_ROUTES = await importPrerenderedRoutes()
   // HYDRATION ISSUE BEACUSE OF /
-  // for(let i=0; i<PRERENDERED_ROUTES.length; i++){
-  //   app.get(PRERENDERED_ROUTES[i], (req, res)=>{
-  //     res.sendFile(path.join(process.cwd(), `dist/${PRERENDERED_ROUTES[i]}/index.html`))
-  //   })
-  // }
+  for(let i=0; i<PRERENDERED_ROUTES.length; i++){
+    app.get(PRERENDERED_ROUTES[i], (req, res)=>{
+      res.sendFile(path.join(process.cwd(), `dist/${PRERENDERED_ROUTES[i]}/index.html`))
+    })
+  }
 
   app.get('/--ziko--', (req, res)=>{
     res.json(globalThis.Ziko)
